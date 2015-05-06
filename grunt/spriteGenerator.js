@@ -4,7 +4,7 @@ module.exports = {
 
     sprite: {
       files: {
-        'assets/img/png/sprite.png': ['assets/css/site.css']
+        'assets/img/sprite.png': ['assets/css/site.css']
       }
     }
 };

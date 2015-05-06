@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Enqueue scripts & styles
+ * Enqueue assets
  */
 function cpd_enqueue_assets()
 {
@@ -17,12 +17,18 @@ function cpd_enqueue_assets()
 add_action( 'wp_enqueue_scripts', 'cpd_enqueue_assets' );
 
 /**
- * Remove from Twenty Fifteen
+ * Cleanup Twenty Fifteen
  */
 
 function cpd_cleanup_twentyfifteen()
 {
-    remove_theme_support('custom-header');
     remove_theme_support('custom-background');
+    remove_theme_support('custom-header');
 }
 add_action( 'init', 'cpd_cleanup_twentyfifteen' );
+
+/**
+ * Additional dependencies
+ */
+
+require get_stylesheet_directory() . '/inc/customizer.php';

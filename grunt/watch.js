@@ -19,7 +19,7 @@ module.exports = {
     // We'll silently (no notification) run the scripts alias to ensure Modernizr build is aware of any new checks in the CSS
     styles: {
       files: ['assets/scss/**/*.scss'],
-      tasks: ['scsslint', 'sass', 'autoprefixer', 'cssmin', 'spriteGenerator', 'notify:styles', 'scripts'],
+      tasks: ['scsslint', 'sass', 'autoprefixer', 'cssmin', 'notify:styles', 'scripts'],
       options: {
         spawn: false,
       }

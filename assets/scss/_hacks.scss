@@ -1,0 +1,7 @@
+// Remove box shadow
+body::before,
+.hentry,
+.page-header,
+.page-content {
+    box-shadow: none;
+}

@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 
         concatHead: [
             'assets/js/lib/modernizr-custom.js',
-            'bower_components/respondJS/dest/respond.js',
+            'bower_components/respondJS/dest/respond.src.js',
             'assets/js/header.js'
         ],
 

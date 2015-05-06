@@ -6,7 +6,7 @@ module.exports = function(grunt) {
         "sass",
         "autoprefixer",
         "cssmin",
-        "sprite",
+        // "sprite",
         "jshint:before",
         "modernizr",
         "concat",
