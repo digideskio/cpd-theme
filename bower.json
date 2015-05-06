@@ -1,0 +1,31 @@
+{
+  "name": "cpd-theme",
+  "version": "1.0.0",
+  "authors": [
+    "Make Do <hello@makedo.in>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "modernizr": "latest",
+    "masonry": "latest",
+    "imagesloaded": "latest",
+    "bootstrap-sass-official": "latest",
+    "slick-carousel": "latest",
+    "respondJS": "latest",
+    "normalize.css": "latest",
+    "html5-boilerplate": "latest",
+    "fontawesome": "latest",
+    "jquery-ui": "latest",
+    "jquery": "latest",
+    "jquery-legacy": "jquery#^1",
+    "jquery-modern": "jquery#^2"
+  }
+}
