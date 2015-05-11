@@ -6,9 +6,6 @@
  */
 function cpd_customize_register($wp_customize)
 {
-
-    $color_scheme = twentyfifteen_get_color_scheme();
-
     // Logo
     $wp_customize->add_section('cpd_logo_section' , array(
         'title'       => __('Custom Logo Image', 'cpd'),
@@ -46,7 +43,6 @@ function cpd_customize_register($wp_customize)
 
     // Widget Background Color
     $wp_customize->add_setting('cpd_widget_bg_color', array(
-        'default'           => $color_scheme[6],
         'sanitize_callback' => 'sanitize_hex_color',
         'transport'         => 'postMessage',
     ));
@@ -59,6 +55,7 @@ function cpd_customize_register($wp_customize)
     )));
 
 }
+// WORKING AS EXPECTED
 add_action( 'customize_register', 'cpd_customize_register', 20 );
 
 /**
@@ -86,9 +83,9 @@ function cpd_color_schemes($schemes)
 
     // Add our own colour scheme with a generic name 'CPD'
     $schemes['cpd'] = array(
-        'label'  => __( 'CPD', 'cpd' ),
+        'label'  => __( 'CPD', 'twentyfifteen' ),
         'colors' => array(
-            '#f1f1f1',
+            '#ffcc00',
             '#f1f1f1',
             '#ffffff',
             '#333333',
@@ -100,6 +97,7 @@ function cpd_color_schemes($schemes)
 
     return $schemes;
 }
+// WORKING AS EXPECTED
 add_filter('twentyfifteen_color_schemes', 'cpd_color_schemes');
 
 /**
@@ -113,7 +111,8 @@ function cpd_color_scheme_css()
     if ('default' === $color_scheme_option) {
         return;
     }
-
+//OK
+    // THIS IS THE PROBLEM
     $color_scheme = twentyfifteen_get_color_scheme();
 
     $colors = array(
@@ -121,6 +120,14 @@ function cpd_color_scheme_css()
     );
 
     $color_scheme_css = cpd_get_color_scheme_css($colors);
+
+    // echo "<pre>";
+    // var_dump($color_scheme_option);
+    // var_dump($colors);
+    // var_dump($color_scheme);
+    // var_dump($color_scheme_css);
+    // echo "</pre>";
+    // exit(0);
 
     wp_add_inline_style('cpd-style', $color_scheme_css);
 }
@@ -132,8 +139,9 @@ add_action('wp_enqueue_scripts', 'cpd_color_scheme_css', 20);
 function cpd_customize_control_js()
 {
     wp_enqueue_script( 'cpd-color-scheme-control', get_stylesheet_directory_uri() . '/js/color-scheme-control.min.js', array( 'customize-controls', 'iris', 'underscore', 'wp-util' ), '20141216', true );
-    wp_localize_script( 'cpd-color-scheme-control', 'colorScheme', twentyfifteen_get_color_schemes() );
+    wp_localize_script( 'cpd-color-scheme-control', 'colorSchemeCPD', twentyfifteen_get_color_schemes() );
 }
+// WORKING AS EXPECTED
 add_action( 'customize_controls_enqueue_scripts', 'cpd_customize_control_js', 20 );
 
 /**
@@ -141,8 +149,9 @@ add_action( 'customize_controls_enqueue_scripts', 'cpd_customize_control_js', 20
  */
 function cpd_customize_preview_js()
 {
-    wp_enqueue_script( 'cpd-customize-preview', get_stylesheet_directory_uri() . '/js/customize-preview.min.js', array( 'customize-preview', 'twentyfifteen-customize-preview' ), '20141216', true );
+    wp_enqueue_script( 'cpd-customize-preview', get_stylesheet_directory_uri() . '/js/customize-preview.min.js', array('customize-preview'), '20141216', true );
 }
+// WORKING AS EXPECTED
 add_action( 'customize_preview_init', 'cpd_customize_preview_js', 20 );
 
 /**
@@ -166,6 +175,7 @@ CSS;
 
     return $css;
 }
+// WORKING AS EXPECTED
 
 /**
  * Output an Underscore template for generating CSS for the color scheme.
@@ -186,4 +196,5 @@ function cpd_color_scheme_css_template()
     </script>
     <?php
 }
+// WORKING AS EXPECTED
 add_action('customize_controls_print_footer_scripts', 'cpd_color_scheme_css_template', 100);

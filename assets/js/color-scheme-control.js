@@ -20,10 +20,10 @@
 				this.setting.bind( 'change', function( value ) {
 					// THEN ADD A BLOCK FOR EVERY ADDITIONAL COLOR OPTION HERE
 					// Update Background Color.
-					api( 'cpd_widget_bg_color' ).set( colorScheme[value].colors[0] );
+					api( 'cpd_widget_bg_color' ).set( colorSchemeCPD[value].colors[6] );
 					api.control( 'cpd_widget_bg_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorScheme[value].colors[0] )
-						.wpColorPicker( 'defaultColor', colorScheme[value].colors[0] );
+						.data( 'data-default-color', colorSchemeCPD[value].colors[6] )
+						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[6] );
 				} );
 			}
 		}
@@ -33,7 +33,7 @@
 	// Generate the CSS for the current Color Scheme.
 	function updateCSS() {
 		var scheme = api( 'color_scheme' )(), css,
-			colors = _.object( colorSchemeKeys, colorScheme[ scheme ].colors );
+			colors = _.object( colorSchemeKeys, colorSchemeCPD[ scheme ].colors );
 
 		// Merge in color scheme overrides.
 		_.each( colorSettings, function( setting ) {
