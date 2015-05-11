@@ -5,7 +5,8 @@
  */
 
 ( function( api ) {
-	// JUST ADD THE CONTROL NAME TO THE KEYS AND SETTINGS ARRAYS HERE
+	// I've set colorSettings to be the same as colorSchemeKeys as there was no need for
+	// two completely identical arrays
 	var cssTemplate = wp.template( 'cpd-color-scheme' ),
 		colorSchemeKeys = [
 			'cpd_widget_link_bg_color',
@@ -22,21 +23,7 @@
 			'cpd_sidebar_bg_color',
 			'cpd_title_tagline_color'
 		],
-		colorSettings = [
-			'cpd_widget_link_bg_color',
-			'cpd_widget_link_bg_color_alt',
-			'cpd_widget_link_color',
-			'cpd_widget_link_color_alt',
-			'cpd_widget_heading_bg_color',
-			'cpd_widget_heading_color',
-			'cpd_main_bg_color',
-			'cpd_article_bg_color',
-			'cpd_article_text_color',
-			'cpd_article_foot_bg_color',
-			'cpd_article_foot_text_color',
-			'cpd_sidebar_bg_color',
-			'cpd_title_tagline_color'
-		];
+		colorSettings = colorSchemeKeys;
 
 	api.controlConstructor.select = api.Control.extend( {
 		ready: function() {
