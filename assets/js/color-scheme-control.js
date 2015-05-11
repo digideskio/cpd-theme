@@ -19,7 +19,8 @@
 			'cpd_article_text_color',
 			'cpd_article_foot_bg_color',
 			'cpd_article_foot_text_color',
-			'cpd_sidebar_bg_color'
+			'cpd_sidebar_bg_color',
+			'cpd_title_tagline_color'
 		],
 		colorSettings = [
 			'cpd_widget_link_bg_color',
@@ -33,7 +34,8 @@
 			'cpd_article_text_color',
 			'cpd_article_foot_bg_color',
 			'cpd_article_foot_text_color',
-			'cpd_sidebar_bg_color'
+			'cpd_sidebar_bg_color',
+			'cpd_title_tagline_color'
 		];
 
 	api.controlConstructor.select = api.Control.extend( {
@@ -41,6 +43,7 @@
 			if ( 'color_scheme' === this.id ) {
 				this.setting.bind( 'change', function( value ) {
 					// THEN ADD A BLOCK FOR EVERY ADDITIONAL COLOR OPTION HERE
+					// THIS CAN BE MADE DRY-ER - REVISIT!
 
 					// Widget Link Background Color
 					api( 'cpd_widget_link_bg_color' ).set( colorSchemeCPD[value].colors[6] );
@@ -113,6 +116,12 @@
 					api.control( 'cpd_sidebar_bg_color' ).container.find( '.color-picker-hex' )
 						.data( 'data-default-color', colorSchemeCPD[value].colors[17] )
 						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[17] );
+
+					// Header & Sidebar Background Color.
+					api( 'cpd_title_tagline_color' ).set( colorSchemeCPD[value].colors[18] );
+					api.control( 'cpd_title_tagline_color' ).container.find( '.color-picker-hex' )
+						.data( 'data-default-color', colorSchemeCPD[value].colors[18] )
+						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[18] );
 				} );
 			}
 		}

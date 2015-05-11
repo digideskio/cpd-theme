@@ -90,6 +90,20 @@ function cpd_customize_register($wp_customize)
         'settings'    => 'cpd_sidebar_bg_color'
     )));
 
+    // Site Title & Tagline Color
+    $wp_customize->add_setting('cpd_title_tagline_color', array(
+        'default'           => $color_scheme[18],
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_title_tagline_color', array(
+        'label'       => __('Site Title & Tagline Color', 'cpd'),
+        'description' => __('Change the color of the site title & tagline text.', 'cpd'),
+        'section'     => 'cpd_sidebar_colors',
+        'settings'    => 'cpd_title_tagline_color'
+    )));
+
     // Widget Link Background Color
     $wp_customize->add_setting('cpd_widget_link_bg_color', array(
         'default'           => $color_scheme[6],
@@ -266,6 +280,7 @@ add_action('customize_register', 'cpd_customize_register', 30);
  * 15. Article Footer Background Color
  * 16. Article Footer Text Color
  * 17. Header & Sidebar Background Color
+ * 18. Site Title & Tagline Color
  */
 
 function cpd_color_schemes($schemes)
@@ -296,7 +311,8 @@ function cpd_color_schemes($schemes)
             '#414042', // 14
             '#414042', // 15
             '#ffffff', // 16
-            '#f1f1f1'  // 17
+            '#f1f1f1', // 17
+            '#414042'  // 18
         ),
       );
 
@@ -321,7 +337,8 @@ function cpd_color_schemes($schemes)
             '#ffffff', // 14
             '#030000', // 15
             '#ffffff', // 16
-            '#f1f1f1'  // 17
+            '#f1f1f1', // 17
+            '#414042'  // 18
         ),
       );
 
@@ -355,7 +372,8 @@ function cpd_color_scheme_css()
         'cpd_article_text_color'       => get_theme_mod('cpd_article_text_color', 'default'),
         'cpd_article_foot_bg_color'    => get_theme_mod('cpd_article_foot_bg_color', 'default'),
         'cpd_article_foot_text_color'  => get_theme_mod('cpd_article_foot_text_color', 'default'),
-        'cpd_sidebar_bg_color'         => get_theme_mod('cpd_sidebar_bg_color', 'default')
+        'cpd_sidebar_bg_color'         => get_theme_mod('cpd_sidebar_bg_color', 'default'),
+        'cpd_title_tagline_color'      => get_theme_mod('cpd_title_tagline_color', 'default')
     );
 
     $color_scheme_css = cpd_get_color_scheme_css($colors);
@@ -383,17 +401,58 @@ function cpd_get_color_scheme_css($colors)
         background-color: {$colors['cpd_sidebar_bg_color']};
     }
 
-    /* Widget Links */
-    .widget li a {
+    /* Site Title & Tagline Color */
+    .intro .site-title,
+    .intro .site-description {
+        color: {$colors['cpd_title_tagline_color']};
+    }
+
+    /* Widget Links & Text Widgets */
+    .widget li,
+    .textwidget,
+    .tagcloud {
         background-color: {$colors['cpd_widget_link_bg_color']};
         color: {$colors['cpd_widget_link_color']};
+    }
+
+    .widget li a {
+        color: {$colors['cpd_widget_link_color']};
+    }
+
+    .widget li:hover,
+    .widget li:focus,
+    .widget li.current_page_item {
+        background-color: {$colors['cpd_widget_link_bg_color_alt']};
+        color: {$colors['cpd_widget_link_color_alt']};
     }
 
     .widget li a:hover,
     .widget li a:focus,
     .widget li.current_page_item a {
-        background-color: {$colors['cpd_widget_link_bg_color_alt']};
         color: {$colors['cpd_widget_link_color_alt']};
+    }
+
+    .widget .recentcomments {
+        font-family: "Noto Sans", sans-serif;
+    }
+
+    .widget .recentcomments,
+    .widget .recentcomments a,
+    .widget .recentcomments span {
+        transition: color ease-in-out .3s;
+    }
+
+    .widget .recentcomments:hover a,
+    .widget .recentcomments:hover span,
+    .widget .recentcomments:focus a,
+    .widget .recentcomments:focus span {
+        color: {$colors['cpd_widget_link_color_alt']};
+    }
+
+    .widget .tagcloud a,
+    .widget .tagcloud a:hover,
+    .widget .tagcloud a:focus {
+        color: {$colors['cpd_widget_link_color']};
     }
 
     /* Widget Headings */
@@ -448,7 +507,8 @@ function cpd_get_color_scheme_css($colors)
     .site-main h3, .site-main h3 a,
     .site-main h4, .site-main h4 a,
     .site-main h5, .site-main h5 a,
-    .site-main h6, .site-main h6 a {
+    .site-main h6, .site-main h6 a,
+    .site-main .comment-content {
         color: {$colors['cpd_article_text_color']};
     }
 
@@ -512,6 +572,7 @@ function cpd_color_scheme_css_template()
         'cpd_article_foot_bg_color'    => '{{ data.cpd_article_foot_bg_color }}',
         'cpd_article_foot_text_color'  => '{{ data.cpd_article_foot_text_color }}',
         'cpd_sidebar_bg_color'         => '{{ data.cpd_sidebar_bg_color }}',
+        'cpd_title_tagline_color'      => '{{ data.cpd_title_tagline_color }}'
     );
     ?>
     <script type="text/html" id="tmpl-cpd-color-scheme">

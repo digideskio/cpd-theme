@@ -16,16 +16,8 @@
     li {
         border: 0;
         padding: 0;
-    }
-
-    a {
-        display: block;
-        font-family: $noto-sans;
-        font-size: 14px;
-        line-height: 1.6;
-        padding: 12px 35px 12px 10px;
         position: relative;
-        transition: background-color ease-in-out .3s, color ease-in-out .3s;
+        transition: background-color ease-in-out .3s;
 
         &:after {
             content: '\f429';
@@ -38,6 +30,15 @@
         }
     }
 
+    a {
+        display: block;
+        font-family: $noto-sans;
+        font-size: 14px;
+        line-height: 1.6;
+        padding: 12px 35px 12px 10px;
+        transition: color ease-in-out .3s;
+    }
+
     a:hover,
     a:focus,
     li.current_page_item a {
@@ -46,10 +47,30 @@
         }
     }
 
+    .recentcomments {
+        font-size: 14px;
+        line-height: 1.6;
+        padding: 12px 35px 12px 10px !important;
+    }
+
     input.search-field {
         border: 0;
         font-size: 14px;
         font-family: $noto-sans;
         padding: 12px 10px;
+    }
+
+    .textwidget {
+        font-family: $noto-sans;
+        padding: 12px 10px;
+    }
+
+    .tagcloud {
+        padding: 12px 35px 12px 10px;
+
+        a {
+            display: inline;
+            padding: 0;
+        }
     }
 }
