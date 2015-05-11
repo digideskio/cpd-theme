@@ -27,7 +27,7 @@
 
     <div id="sidebar" class="sidebar">
         <header id="masthead" class="site-header" role="banner">
-            <div class="site-branding">
+            <div class="branding">
                 <?php
                     $logo    = get_theme_mod('cpd_logo');
                     $name    = get_bloginfo('name','display');
@@ -40,23 +40,23 @@
                         <img src='<?php echo esc_url($logo); ?>' alt='<?php echo esc_attr($name); ?>'></a>
 
                         <?php
+                    } ?>
+
+                        <button class="secondary-toggle"><?php _e( 'Menu and widgets', 'twentyfifteen' ); ?></button>
+
+                    </div><!-- .site-branding -->
+
+                    <?php
                         if ($tagpos === 'left') {
                             if ($tagtext || is_customize_preview()) { ?>
-                                <p class="site-description left"><?php echo $tagtext; ?></h2>
+                                <div class="intro left">
+                                    <h1 class="site-title"><?php echo $name ?></h1>
+                                    <p class="site-description"><?php echo $tagtext; ?></h2>
+                                </div>
                             <?php
                             }
                         }
-
-                    } else {
-                        if (is_front_page() && is_home()) : ?>
-                            <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-                        <?php else : ?>
-                            <p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-                        <?php endif;
-                    }
                 ?>
-                <button class="secondary-toggle"><?php _e( 'Menu and widgets', 'twentyfifteen' ); ?></button>
-            </div><!-- .site-branding -->
         </header><!-- .site-header -->
 
         <?php get_sidebar(); ?>
@@ -65,8 +65,10 @@
     <div id="content" class="site-content">
 
         <?php
-        if ($tagpos === 'right') {
-            if ( $tagtext || is_customize_preview() ) : ?>
-                <h2 class="site-description right"><?php echo $tagtext; ?></h2>
-            <?php endif;
+        if ($tagpos === 'right') { ?>
+                <div class="intro right">
+                    <h1 class="site-title"><?php echo $name ?></h1>
+                    <p class="site-description"><?php echo $tagtext; ?></h2>
+                </div>
+            <?php
         }

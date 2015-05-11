@@ -20,11 +20,13 @@ Text Domain: cpd
 @import "base/typography";
 
 // Layout
+@import "layout/aside";
+@import "layout/footer";
 @import "layout/header";
 @import "layout/main";
-@import "layout/footer";
 
 // Module
+@import "module/entry-content";
 @import "module/widgets";
 
 // Print
@@ -32,6 +34,7 @@ Text Domain: cpd
 // State
 
 // Theme
+@import "theme/sheff";
 
 // Other
 @import "hacks";

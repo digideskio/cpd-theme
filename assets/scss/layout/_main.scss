@@ -1,1 +1,15 @@
-.site-main {}
+#content {
+    @media (min-width: $tablet) {
+        margin-left: 29.4118%;
+        width: 69.5882%;
+    }
+}
+
+#main {
+    margin-top: 50px;
+    padding: 0;
+
+    @media (min-width: $tablet) {
+        margin-top: 80px;
+    }
+}
