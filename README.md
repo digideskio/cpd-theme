@@ -1,4 +1,4 @@
-Continuous Professional Development Theme
+Continuing Professional Development Theme
 ========================================
 
 Notes to follow...
