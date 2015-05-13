@@ -12,7 +12,14 @@
 		                    .find( '#cpd-color-scheme-css' );
 	}
 
-	// Color Scheme CSS.
+	// Advisory Notice
+	api( 'cpd_advisory_notice', function( value ) {
+		value.bind( function( to ) {
+			$( '.advisory-notice p' ).text( to );
+		} );
+	} );
+
+	// Color Scheme CSS
 	api.bind( 'preview-ready', function() {
 		api.preview.bind( 'update-color-scheme-css', function( css ) {
 			$style.html( css );

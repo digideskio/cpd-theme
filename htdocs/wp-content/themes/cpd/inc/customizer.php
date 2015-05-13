@@ -1,77 +1,45 @@
 <?php
 
 /**
+ * Require our custom control classes
+ */
+require_once 'customizer-classes.php';
+
+/**
  * Remove/Edit customizer options added by Twenty Fifteen
  */
 function cpd_customize_cleanup($wp_customize)
 {
-    // Remove - we're going to define this in our option panels
+    // Remove existing header/sidebar controls
     $wp_customize->remove_control('header_background_color');
     $wp_customize->remove_control('sidebar_textcolor');
 
-    // Rename this now it's mostly empty
-    $wp_customize->get_section('colors')->title = __('Color Scheme');
+    // Change 'Colors' to 'Colour Scheme'
+    $wp_customize->get_section('colors')->title = __('Colour Scheme');
+
+    // Change label 'Base Color Scheme' to 'Scheme'
+    $wp_customize->get_control('color_scheme')->label = __('Scheme');
 }
 add_action('customize_register', 'cpd_customize_cleanup', 20);
-
-/**
- * Create a custom menu dropdown class
- */
-function cpd_customize_register_menu_select($wp_customize) {
-    class CPD_Customize_Textarea_Control extends WP_Customize_Control
-    {
-        private $menus = false;
-
-        public function __construct($manager, $id, $args = array(), $options = array())
-        {
-            $this->menus = wp_get_nav_menus($options);
-
-            parent::__construct($manager, $id, $args);
-        }
-
-        public function render_content()
-        {
-            if(!empty($this->menus))
-            {
-                ?>
-                    <label>
-                        <span class="customize-menu-dropdown"><?php echo esc_html( $this->label ); ?></span>
-                        <select name="<?php echo $this->id; ?>" id="<?php echo $this->id; ?>">
-                        <?php
-                            foreach ( $this->menus as $menu )
-                            {
-                                printf('<option value="%s" %s>%s</option>', $menu->term_id, selected($this->value(), $menu->term_id, false), $menu->name);
-                            }
-                        ?>
-                        </select>
-                    </label>
-                <?php
-            }
-        }
-    }
-}
-// add_action( 'customize_register', 'cpd_customize_register_menu_select' );
 
 /**
  * Customizer options - Branding
  */
 function cpd_customize_branding($wp_customize)
 {
-    $color_scheme = twentyfifteen_get_color_scheme();
-
-    $wp_customize->add_section('cpd_branding' , array(
-        'title'       => __('Branding', 'cpd'),
-        'priority'    => 10,
-        'description' => 'Upload a custom logo that will be visible at the top of the sidebar. Maximum width should be 248 pixels.',
+    $wp_customize->add_section('cpd_branding', array(
+        'title'    => __('Branding', 'cpd'),
+        'priority' => 10,
         // 'capability'  => 'manage_network'
     ));
 
     $wp_customize->add_setting('cpd_logo');
 
     $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'cpd_logo', array(
-        'label'    => __('Logo', 'cpd'),
-        'section'  => 'cpd_branding',
-        'settings' => 'cpd_logo',
+        'label'       => __('Logo', 'cpd'),
+        'description' => 'Upload a custom logo that will be visible in the header/sidebar area. Maximum width should be 248 pixels.',
+        'section'     => 'cpd_branding',
+        'settings'    => 'cpd_logo',
     )));
 }
 add_action('customize_register', 'cpd_customize_branding', 21);
@@ -81,21 +49,26 @@ add_action('customize_register', 'cpd_customize_branding', 21);
  */
 function cpd_customize_intro($wp_customize)
 {
+    $color_scheme = twentyfifteen_get_color_scheme();
+
     // Position
-    $wp_customize->add_setting('cpd_tagline_pos');
+    $wp_customize->add_setting('cpd_tagline_pos', array(
+        'default' => 'left'
+    ));
 
     $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'cpd_tagline_pos', array(
-        'label'    => __('Position', 'cpd'),
-        'section'  => 'title_tagline',
-        'settings' => 'cpd_tagline_pos',
-        'type'     => 'select',
+        'label'       => __('Position', 'cpd'),
+        'description' => 'Choose whether you want the title & tagline to be visible in the sidebar/header area, or above the main content.',
+        'section'     => 'title_tagline',
+        'settings'    => 'cpd_tagline_pos',
+        'type'        => 'select',
             'choices'    => array(
-                'left'   => __('Left  - underneath the logo'),
+                'left'   => __('Left  - in the sidebar/header'),
                 'right'  => __('Right - above the main content')
             )
     )));
 
-    // Color
+    // Colour
     $wp_customize->add_setting('cpd_intro_color', array(
         'default'           => $color_scheme[18],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -103,8 +76,8 @@ function cpd_customize_intro($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_intro_color', array(
-        'label'       => __('Site Title & Tagline Color', 'cpd'),
-        'description' => __('Change the color of the title & tagline text.', 'cpd'),
+        'label'       => __('Colour', 'cpd'),
+        'description' => __('Set the colour of the title & tagline text.', 'cpd'),
         'section'     => 'title_tagline',
         'settings'    => 'cpd_intro_color'
     )));
@@ -116,9 +89,11 @@ add_action('customize_register', 'cpd_customize_intro', 22);
  */
 function cpd_customize_top_bottom($wp_customize)
 {
-    $wp_customize->add_section('cpd_top_bottom' , array(
-        'title'       => __('Top & Bottom Area', 'cpd'),
-        'priority'    => 40
+    $color_scheme = twentyfifteen_get_color_scheme();
+
+    $wp_customize->add_section('cpd_top_bottom', array(
+        'title'    => __('Top & Bottom Area', 'cpd'),
+        'priority' => 30
     ));
 
     // $wp_customize->add_setting('cpd_top_menu', array(
@@ -150,14 +125,16 @@ add_action('customize_register', 'cpd_customize_top_bottom', 23);
 /**
  * Customizer options - Header & Sidebar
  */
-function cpd_customize_header_sidebar($wp_customize)
+function cpd_customize_sidebar($wp_customize)
 {
-    $wp_customize->add_section('cpd_header_sidebar' , array(
-        'title'       => __('Header & Sidebar Area', 'cpd'),
-        'priority'    => 40
+    $color_scheme = twentyfifteen_get_color_scheme();
+
+    $wp_customize->add_section('cpd_sidebar' , array(
+        'title'    => __('Sidebar & Header Area', 'cpd'),
+        'priority' => 40
     ));
 
-    // Header & Sidebar Background Color
+    // Header & Sidebar Background Colour
     $wp_customize->add_setting('cpd_sidebar_bg_color', array(
         'default'           => $color_scheme[17],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -165,13 +142,13 @@ function cpd_customize_header_sidebar($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_sidebar_bg_color', array(
-        'label'       => __('Header & Sidebar Background Color', 'cpd'),
-        'description' => __('Change the background color for the header/sidebar area.', 'cpd'),
-        'section'     => 'cpd_header_sidebar',
+        'label'       => __('Background Colour', 'cpd'),
+        'description' => __('Set the background colour for the sidebar/header area.', 'cpd'),
+        'section'     => 'cpd_sidebar',
         'settings'    => 'cpd_sidebar_bg_color'
     )));
 
-    // Widget Link Background Color
+    // Widget Link Background Colour
     $wp_customize->add_setting('cpd_widget_link_bg_color', array(
         'default'           => $color_scheme[6],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -179,13 +156,13 @@ function cpd_customize_header_sidebar($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_widget_link_bg_color', array(
-        'label'       => __('Widget Link Background Color', 'cpd'),
-        'description' => __('Applied to all widget links in the sidebar.', 'cpd'),
-        'section'     => 'cpd_header_sidebar',
+        'label'       => __('Widget Link Background Colour', 'cpd'),
+        'description' => __('Set the background colour for all widget links.', 'cpd'),
+        'section'     => 'cpd_sidebar',
         'settings'    => 'cpd_widget_link_bg_color'
     )));
 
-    // Widget Link Background Color Alternative
+    // Widget Link Background Colour Alternative
     $wp_customize->add_setting('cpd_widget_link_bg_color_alt', array(
         'default'           => $color_scheme[7],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -193,13 +170,13 @@ function cpd_customize_header_sidebar($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_widget_link_bg_color_alt', array(
-        'label'       => __('Widget Link Alternative Background Color', 'cpd'),
-        'description' => __('Applied to all widget links in the sidebar when in hover/active state.', 'cpd'),
-        'section'     => 'cpd_header_sidebar',
+        'label'       => __('Widget Link Alternative Background Colour', 'cpd'),
+        'description' => __('Set the background colour for all widget links when in hover/active state.', 'cpd'),
+        'section'     => 'cpd_sidebar',
         'settings'    => 'cpd_widget_link_bg_color_alt'
     )));
 
-    // Widget Link Color
+    // Widget Text Link Colour
     $wp_customize->add_setting('cpd_widget_link_color', array(
         'default'           => $color_scheme[8],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -207,13 +184,13 @@ function cpd_customize_header_sidebar($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_widget_link_color', array(
-        'label'       => __('Widget Link Color', 'cpd'),
-        'description' => __('Applied to all widget links in the sidebar.', 'cpd'),
-        'section'     => 'cpd_header_sidebar',
+        'label'       => __('Widget Link Colour', 'cpd'),
+        'description' => __('Set the text colour for all widget links.', 'cpd'),
+        'section'     => 'cpd_sidebar',
         'settings'    => 'cpd_widget_link_color'
     )));
 
-    // Widget Link Color Alt
+    // Widget Link Text Color Alternative
     $wp_customize->add_setting('cpd_widget_link_color_alt', array(
         'default'           => $color_scheme[9],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -221,13 +198,13 @@ function cpd_customize_header_sidebar($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_widget_link_color_alt', array(
-        'label'       => __('Widget Link Alternative Color', 'cpd'),
-        'description' => __('Applied to all widget links in the sidebar.', 'cpd'),
-        'section'     => 'cpd_header_sidebar',
+        'label'       => __('Widget Link Alternative Colour', 'cpd'),
+        'description' => __('Set the text colour for all widget links when in hover/active state.', 'cpd'),
+        'section'     => 'cpd_sidebar',
         'settings'    => 'cpd_widget_link_color_alt'
     )));
 
-    // Widget Heading Background Color
+    // Widget Heading Background Colour
     $wp_customize->add_setting('cpd_widget_heading_bg_color', array(
         'default'           => $color_scheme[10],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -235,13 +212,13 @@ function cpd_customize_header_sidebar($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_widget_heading_bg_color', array(
-        'label'       => __('Widget Heading Background Color', 'cpd'),
-        'description' => __('Applied to all widget headings in the sidebar.', 'cpd'),
-        'section'     => 'cpd_header_sidebar',
+        'label'       => __('Widget Heading Background Colour', 'cpd'),
+        'description' => __('Set the background colour for all widget headings.', 'cpd'),
+        'section'     => 'cpd_sidebar',
         'settings'    => 'cpd_widget_heading_bg_color'
     )));
 
-    // Widget Heading Color
+    // Widget Heading Text Colour
     $wp_customize->add_setting('cpd_widget_heading_color', array(
         'default'           => $color_scheme[11],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -249,25 +226,27 @@ function cpd_customize_header_sidebar($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_widget_heading_color', array(
-        'label'       => __('Widget Heading Text Color', 'cpd'),
-        'description' => __('Applied to all widget headings in the sidebar.', 'cpd'),
-        'section'     => 'cpd_header_sidebar',
+        'label'       => __('Widget Heading Text Colour', 'cpd'),
+        'description' => __('Set the text colour for all widget headings.', 'cpd'),
+        'section'     => 'cpd_sidebar',
         'settings'    => 'cpd_widget_heading_color'
     )));
 }
-add_action('customize_register', 'cpd_customize_header_sidebar', 24);
+add_action('customize_register', 'cpd_customize_sidebar', 24);
 
 /**
  * Customizer options - Main Content Area
  */
-function cpd_customize_main_content($wp_customize)
+function cpd_customize_main($wp_customize)
 {
-    $wp_customize->add_section('cpd_main_content' , array(
-        'title'       => __('Main Content Area', 'cpd'),
-        'priority'    => 50
+    $color_scheme = twentyfifteen_get_color_scheme();
+
+    $wp_customize->add_section('cpd_main' , array(
+        'title'    => __('Main Content Area', 'cpd'),
+        'priority' => 50
     ));
 
-    // Main Content Area Background Color
+    // Main Content Area Background Colour
     $wp_customize->add_setting('cpd_main_bg_color', array(
         'default'           => $color_scheme[12],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -275,13 +254,13 @@ function cpd_customize_main_content($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_main_bg_color', array(
-        'label'       => __('Main Content Background Color', 'cpd'),
-        'description' => __('Change the background color for the main content area.', 'cpd'),
-        'section'     => 'cpd_main_content',
+        'label'       => __('Background Colour', 'cpd'),
+        'description' => __('Set the background colour for the main content area.', 'cpd'),
+        'section'     => 'cpd_main',
         'settings'    => 'cpd_main_bg_color'
     )));
 
-    // Article Background Color
+    // Article Background Colour
     $wp_customize->add_setting('cpd_article_bg_color', array(
         'default'           => $color_scheme[13],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -289,13 +268,13 @@ function cpd_customize_main_content($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_article_bg_color', array(
-        'label'       => __('Article Background Color', 'cpd'),
-        'description' => __('Change the background color for the article boxes, comment area etc.', 'cpd'),
-        'section'     => 'cpd_main_content',
+        'label'       => __('Article Background Colour', 'cpd'),
+        'description' => __('Set the background colour for the article boxes, comment area etc.', 'cpd'),
+        'section'     => 'cpd_main',
         'settings'    => 'cpd_article_bg_color'
     )));
 
-    // Article Text Color
+    // Article Text Colour
     $wp_customize->add_setting('cpd_article_color', array(
         'default'           => $color_scheme[14],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -303,13 +282,13 @@ function cpd_customize_main_content($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_article_color', array(
-        'label'       => __('Article Text Color', 'cpd'),
-        'description' => __('Change the text color for the article boxes, comment area etc.', 'cpd'),
-        'section'     => 'cpd_main_content',
+        'label'       => __('Article Text Colour', 'cpd'),
+        'description' => __('Set the text colour for the article boxes, comment area etc.', 'cpd'),
+        'section'     => 'cpd_main',
         'settings'    => 'cpd_article_color'
     )));
 
-    // Article Footer Background Color
+    // Article Footer Background Colour
     $wp_customize->add_setting('cpd_article_foot_bg_color', array(
         'default'           => $color_scheme[15],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -317,13 +296,13 @@ function cpd_customize_main_content($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_article_foot_bg_color', array(
-        'label'       => __('Article Footer Background Color', 'cpd'),
-        'description' => __('Change the background color for the footer of the article boxes.', 'cpd'),
-        'section'     => 'cpd_main_content',
+        'label'       => __('Article Footer Background Colour', 'cpd'),
+        'description' => __('Set the background colour for the footer of the article boxes.', 'cpd'),
+        'section'     => 'cpd_main',
         'settings'    => 'cpd_article_foot_bg_color'
     )));
 
-    // Article Footer Text Color
+    // Article Footer Text Colour
     $wp_customize->add_setting('cpd_article_foot_color', array(
         'default'           => $color_scheme[16],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -331,38 +310,51 @@ function cpd_customize_main_content($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_article_foot_color', array(
-        'label'       => __('Article Footer Text Color', 'cpd'),
-        'description' => __('Change the text color for the footer of the article boxes.', 'cpd'),
-        'section'     => 'cpd_main_content',
+        'label'       => __('Article Footer Text Colour', 'cpd'),
+        'description' => __('Set the text colour for the footer of the article boxes.', 'cpd'),
+        'section'     => 'cpd_main',
         'settings'    => 'cpd_article_foot_color'
     )));
 }
-add_action('customize_register', 'cpd_customize_main_content', 25);
+add_action('customize_register', 'cpd_customize_main', 25);
 
 /**
  * Customizer options - Advisory Notice
  */
 function cpd_customize_advisory($wp_customize)
 {
+    $color_scheme = twentyfifteen_get_color_scheme();
+
     $wp_customize->add_section('cpd_advisory' , array(
         'title'       => __('Advisory Notice ', 'cpd'),
         'priority'    => 60
     ));
 
-    // Advisory Text
-    $wp_customize->add_setting('cpd_advisory_notice', array(
-        'default'        => '',
+    // Show Advisory
+    $wp_customize->add_setting('cpd_advisory_show', array(
         'transport'      => 'postMessage',
     ));
 
+    $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'cpd_advisory_show', array(
+        'label'    => __('Show notice?', 'cpd'),
+        'section'  => 'cpd_advisory',
+        'settings' => 'cpd_advisory_show',
+        'type'     => 'checkbox'
+    )));
+
+    // Advisory Notice Text
+    $wp_customize->add_setting('cpd_advisory_notice', array(
+        'transport' => 'postMessage',
+    ));
+
     $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'cpd_advisory_notice', array(
-        'label'    => __('Notice', 'cpd'),
+        'label'    => __('Notice Text', 'cpd'),
         'section'  => 'cpd_advisory',
         'settings' => 'cpd_advisory_notice',
         'type'     => 'textarea'
     )));
 
-    // Advisory Background Color
+    // Advisory Background Colour
     $wp_customize->add_setting('cpd_advisory_bg_color', array(
         'default'           => $color_scheme[19],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -370,13 +362,13 @@ function cpd_customize_advisory($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_advisory_bg_color', array(
-        'label'       => __('Advisory Notice Background Color', 'cpd'),
-        'description' => __('Change the background color of the advisory notice.', 'cpd'),
+        'label'       => __('Background Colour', 'cpd'),
+        'description' => __('Set the background colour of the advisory notice.', 'cpd'),
         'section'     => 'cpd_advisory',
         'settings'    => 'cpd_advisory_bg_color'
     )));
 
-     // Advisory Text Color
+     // Advisory Text Colour
     $wp_customize->add_setting('cpd_advisory_color', array(
         'default'           => $color_scheme[15],
         'sanitize_callback' => 'sanitize_hex_color',
@@ -384,8 +376,8 @@ function cpd_customize_advisory($wp_customize)
     ));
 
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_advisory_color', array(
-        'label'       => __('Advisory Notice Text Color', 'cpd'),
-        'description' => __('Change the text color for the advisory notice.', 'cpd'),
+        'label'       => __('Text Colour', 'cpd'),
+        'description' => __('Set the text colour of the advisory notice.', 'cpd'),
         'section'     => 'cpd_advisory',
         'settings'    => 'cpd_advisory_color'
     )));
@@ -410,7 +402,6 @@ add_action('customize_register', 'cpd_customize_advisory', 26);
  * 19. Advisory Notice Background Color
  * 20. Advisory Notice Text Color
  */
-
 function cpd_color_schemes($schemes)
 {
     // Remove out the schemes that ship with Twenty Fifteen
@@ -493,21 +484,21 @@ function cpd_color_scheme_css()
     $color_scheme = twentyfifteen_get_color_scheme();
 
     $colors = array(
-        'cpd_widget_link_bg_color'     => get_theme_mod('cpd_widget_link_bg_color', 'default'),
-        'cpd_widget_link_bg_color_alt' => get_theme_mod('cpd_widget_link_bg_color_alt', 'default'),
-        'cpd_widget_link_color'        => get_theme_mod('cpd_widget_link_color', 'default'),
-        'cpd_widget_link_color_alt'    => get_theme_mod('cpd_widget_link_color_alt', 'default'),
-        'cpd_widget_heading_bg_color'  => get_theme_mod('cpd_widget_heading_bg_color', 'default'),
-        'cpd_widget_heading_color'     => get_theme_mod('cpd_widget_heading_color', 'default'),
-        'cpd_main_bg_color'            => get_theme_mod('cpd_main_bg_color', 'default'),
-        'cpd_article_bg_color'         => get_theme_mod('cpd_article_bg_color', 'default'),
-        'cpd_article_color'            => get_theme_mod('cpd_article_color', 'default'),
-        'cpd_article_foot_bg_color'    => get_theme_mod('cpd_article_foot_bg_color', 'default'),
-        'cpd_article_foot_color'       => get_theme_mod('cpd_article_foot_color', 'default'),
-        'cpd_sidebar_bg_color'         => get_theme_mod('cpd_sidebar_bg_color', 'default'),
-        'cpd_intro_color'              => get_theme_mod('cpd_intro_color', 'default'),
-        'cpd_advisory_bg_color'        => get_theme_mod('cpd_advisory_bg_color', 'default'),
-        'cpd_advisory_color'           => get_theme_mod('cpd_advisory_color', 'default')
+        'cpd_widget_link_bg_color'     => get_theme_mod('cpd_widget_link_bg_color'),
+        'cpd_widget_link_bg_color_alt' => get_theme_mod('cpd_widget_link_bg_color_alt'),
+        'cpd_widget_link_color'        => get_theme_mod('cpd_widget_link_color'),
+        'cpd_widget_link_color_alt'    => get_theme_mod('cpd_widget_link_color_alt'),
+        'cpd_widget_heading_bg_color'  => get_theme_mod('cpd_widget_heading_bg_color'),
+        'cpd_widget_heading_color'     => get_theme_mod('cpd_widget_heading_color'),
+        'cpd_main_bg_color'            => get_theme_mod('cpd_main_bg_color'),
+        'cpd_article_bg_color'         => get_theme_mod('cpd_article_bg_color'),
+        'cpd_article_color'            => get_theme_mod('cpd_article_color'),
+        'cpd_article_foot_bg_color'    => get_theme_mod('cpd_article_foot_bg_color'),
+        'cpd_article_foot_color'       => get_theme_mod('cpd_article_foot_color'),
+        'cpd_sidebar_bg_color'         => get_theme_mod('cpd_sidebar_bg_color'),
+        'cpd_intro_color'              => get_theme_mod('cpd_intro_color'),
+        'cpd_advisory_bg_color'        => get_theme_mod('cpd_advisory_bg_color'),
+        'cpd_advisory_color'           => get_theme_mod('cpd_advisory_color')
     );
 
     $color_scheme_css = cpd_get_color_scheme_css($colors);

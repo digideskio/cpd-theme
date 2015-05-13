@@ -48,7 +48,7 @@
 
                     <?php
                         if ($tagpos === 'left') {
-                            if ($tagtext || is_customize_preview()) { ?>
+                            if ($tagtext) { ?>
                                 <div class="intro left">
                                     <h1 class="site-title"><?php echo $name ?></h1>
                                     <p class="site-description"><?php echo $tagtext; ?></h2>
@@ -76,12 +76,16 @@
         ?>
 
         <?php
-            $advisory = get_theme_mod('cpd_advisory_notice');
+            $show   = get_theme_mod('cpd_advisory_show', 0);
+            $notice = get_theme_mod('cpd_advisory_notice');
+            if ($notice === '') {
+                $notice = 'No advisory notice text has been entered.';
+            }
 
-            if ($advisory !== '') {
+            if ($show !== 0 || is_customize_preview()) {
                 ?>
                 <div class="advisory-notice">
-                    <p><?php echo $advisory; ?></p>
+                    <p><strong>Notice:</strong> <?php echo $notice; ?></p>
                 </div>
             <?php }
         ?>
