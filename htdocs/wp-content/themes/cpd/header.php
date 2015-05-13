@@ -25,12 +25,12 @@
 <div id="page" class="hfeed site">
     <a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'twentyfifteen' ); ?></a>
 
-    <div id="sidebar" class="sidebar">
+    <div id="" class="sidebar">
         <header id="masthead" class="site-header" role="banner">
             <div class="branding">
                 <?php
                     $logo    = get_theme_mod('cpd_logo');
-                    $name    = get_bloginfo('name','display');
+                    $name    = get_bloginfo('name','display') . " CPD Hub";
                     $tagtext = get_bloginfo( 'description','display');
                     $tagpos  = get_theme_mod('cpd_tagline_pos');
 
@@ -85,7 +85,7 @@
             if ($show || is_customize_preview()) {
                 ?>
                 <div class="advisory-notice">
-                    <p><strong>Notice:</strong> <?php echo $notice; ?></p>
+                    <p><?php echo $notice; ?></p>
                 </div>
             <?php }
         ?>

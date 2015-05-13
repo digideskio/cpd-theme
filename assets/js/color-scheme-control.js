@@ -23,7 +23,10 @@
 			'cpd_sidebar_bg_color',
 			'cpd_intro_color',
 			'cpd_advisory_bg_color',
-			'cpd_advisory_color'
+			'cpd_advisory_color',
+			'cpd_footer_bg_color',
+			'cpd_footer_bottom_bg_color',
+			'cpd_footer_color'
 		],
 		colorSettings = colorSchemeKeys;
 
@@ -123,6 +126,24 @@
 					api.control( 'cpd_advisory_color' ).container.find( '.color-picker-hex' )
 						.data( 'data-default-color', colorSchemeCPD[value].colors[20] )
 						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[20] );
+
+					// Footer Background Color.
+					api( 'cpd_footer_bg_color' ).set( colorSchemeCPD[value].colors[21] );
+					api.control( 'cpd_footer_bg_color' ).container.find( '.color-picker-hex' )
+						.data( 'data-default-color', colorSchemeCPD[value].colors[21] )
+						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[21] );
+
+					// Footer Bottom Background Color.
+					api( 'cpd_footer_bottom_bg_color' ).set( colorSchemeCPD[value].colors[22] );
+					api.control( 'cpd_footer_bottom_bg_color' ).container.find( '.color-picker-hex' )
+						.data( 'data-default-color', colorSchemeCPD[value].colors[22] )
+						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[22] );
+
+					// Footer Text Color.
+					api( 'cpd_footer_color' ).set( colorSchemeCPD[value].colors[23] );
+					api.control( 'cpd_footer_color' ).container.find( '.color-picker-hex' )
+						.data( 'data-default-color', colorSchemeCPD[value].colors[23] )
+						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[23] );
 				} );
 			}
 		}

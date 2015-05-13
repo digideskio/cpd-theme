@@ -90,7 +90,7 @@ add_action('customize_register', 'cpd_customize_intro', 22);
 function cpd_customize_fonts($wp_customize)
 {
     $wp_customize->add_section('cpd_fonts', array(
-        'title'    => __('Fonts', 'cpd'),
+        'title'    => __('Font Choices', 'cpd'),
         'priority' => 30
     ));
 
@@ -339,7 +339,7 @@ function cpd_customize_advisory($wp_customize)
     $color_scheme = twentyfifteen_get_color_scheme();
 
     $wp_customize->add_section('cpd_advisory' , array(
-        'title'       => __('Advisory Notice ', 'cpd'),
+        'title'       => __('Advisory Notice', 'cpd'),
         'priority'    => 60
     ));
 
@@ -398,6 +398,85 @@ function cpd_customize_advisory($wp_customize)
 add_action('customize_register', 'cpd_customize_advisory', 26);
 
 /**
+ * Customizer options - Footer
+ */
+function cpd_customize_footer($wp_customize)
+{
+
+    $color_scheme = twentyfifteen_get_color_scheme();
+
+    $wp_customize->add_section('cpd_footer' , array(
+        'title'       => __('Footer Area', 'cpd'),
+        'priority'    => 55
+    ));
+
+    // Footer Background Colour
+    $wp_customize->add_setting('cpd_footer_bg_color', array(
+        'default'           => $color_scheme[21],
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_footer_bg_color', array(
+        'label'       => __('Background Colour', 'cpd'),
+        'description' => __('Set the background colour of the site footer.', 'cpd'),
+        'section'     => 'cpd_footer',
+        'settings'    => 'cpd_footer_bg_color'
+    )));
+
+    // Footer Bottom Background Colour
+    $wp_customize->add_setting('cpd_footer_bottom_bg_color', array(
+        'default'           => $color_scheme[22],
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_footer_bottom_bg_color', array(
+        'label'       => __('Bottom Background Colour', 'cpd'),
+        'description' => __('Set the background colour of the bottom bar in the site footer.', 'cpd'),
+        'section'     => 'cpd_footer',
+        'settings'    => 'cpd_footer_bottom_bg_color'
+    )));
+
+    // Footer Text Color
+    $wp_customize->add_setting('cpd_footer_color', array(
+        'default'           => $color_scheme[23],
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_footer_color', array(
+        'label'       => __('Text Colour', 'cpd'),
+        'description' => __('Set the text colour of the site footer.', 'cpd'),
+        'section'     => 'cpd_footer',
+        'settings'    => 'cpd_footer_color'
+    )));
+
+    // Credit Image
+    $wp_customize->add_setting('cpd_credit');
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'cpd_credit', array(
+        'label'       => __('Credit Logo', 'cpd'),
+        'description' => 'Set an image that will appear in the footer, acting as a credit. It is recommended that this image is a JPG rather than a PNG.',
+        'section'     => 'cpd_footer',
+        'settings'    => 'cpd_credit',
+    )));
+
+    // Credit URL
+    $wp_customize->add_setting('cpd_credit_url', array(
+        'transport' => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'cpd_credit_url', array(
+        'label'    => __('Credit Link URL', 'cpd'),
+        'description' => 'Enter a valid URL which.',
+        'section'  => 'cpd_footer',
+        'settings' => 'cpd_credit_url',
+        'type'     => 'text'
+    )));
+}
+add_action('customize_register', 'cpd_customize_footer', 27);
+/**
  * Add/Remove Colour Schemes
  * ---------------------------------------
  * 6.  Widget Link Background Color
@@ -415,6 +494,9 @@ add_action('customize_register', 'cpd_customize_advisory', 26);
  * 18. Site Title & Tagline Color
  * 19. Advisory Notice Background Color
  * 20. Advisory Notice Text Color
+ * 21. Footer Background Color
+ * 22. Footer Bottom Background Color
+ * 23. Footer Text Color
  * ---------------------------------------
  */
 function cpd_color_schemes($schemes)
@@ -447,8 +529,11 @@ function cpd_color_schemes($schemes)
             '#ffffff', // 16
             '#f1f1f1', // 17
             '#414042', // 18
-            '#008000', // 19,
-            '#ffffff'  // 20
+            '#008000', // 19
+            '#ffffff', // 20
+            '#414042', // 21
+            '#030000', // 22
+            '#ffffff'  // 23
         ),
       );
 
@@ -475,8 +560,11 @@ function cpd_color_schemes($schemes)
             '#ffffff', // 16
             '#f1f1f1', // 17
             '#414042', // 18
-            '#008000', // 19,
-            '#ffffff'  // 20
+            '#008000', // 19
+            '#ffffff', // 20
+            '#0066b3', // 21
+            '#030000', // 22
+            '#ffffff'  // 23
         ),
       );
 
@@ -512,7 +600,10 @@ function cpd_enqueue_css()
         'cpd_sidebar_bg_color'         => get_theme_mod('cpd_sidebar_bg_color'),
         'cpd_intro_color'              => get_theme_mod('cpd_intro_color'),
         'cpd_advisory_bg_color'        => get_theme_mod('cpd_advisory_bg_color'),
-        'cpd_advisory_color'           => get_theme_mod('cpd_advisory_color')
+        'cpd_advisory_color'           => get_theme_mod('cpd_advisory_color'),
+        'cpd_footer_bg_color'          => get_theme_mod('cpd_footer_bg_color'),
+        'cpd_footer_bottom_bg_color'   => get_theme_mod('cpd_footer_bottom_bg_color'),
+        'cpd_footer_color'             => get_theme_mod('cpd_footer_color')
     );
 
     // Get our font stacks and Google Fonts URL
@@ -843,6 +934,26 @@ function cpd_get_css($colors, $fonts)
         color: {$colors['cpd_advisory_color']};
      }
 
+     /* Footer */
+     footer[role="contentinfo"] {
+        background-color: {$colors['cpd_footer_bg_color']};
+     }
+
+     .bottom-wrapper {
+        background-color: {$colors['cpd_footer_bottom_bg_color']};
+     }
+
+     .bottom p,
+     .bottom a {
+        color: {$colors['cpd_footer_color']};
+     }
+
+     .footer-menu a:hover,
+     .footer-menu a:focus {
+        border-bottom: 1px solid {$colors['cpd_footer_color']};
+        color: {$colors['cpd_footer_color']};
+     }
+
 CSS;
 
     return $css;
@@ -868,7 +979,10 @@ function cpd_css_template()
         'cpd_sidebar_bg_color'         => '{{ data.cpd_sidebar_bg_color }}',
         'cpd_intro_color'              => '{{ data.cpd_intro_color }}',
         'cpd_advisory_bg_color'        => '{{ data.cpd_advisory_bg_color }}',
-        'cpd_advisory_color'           => '{{ data.cpd_advisory_color }}'
+        'cpd_advisory_color'           => '{{ data.cpd_advisory_color }}',
+        'cpd_footer_bg_color'          => '{{ data.cpd_footer_bg_color }}',
+        'cpd_footer_bottom_bg_color'   => '{{ data.cpd_footer_bottom_bg_color }}',
+        'cpd_footer_color'             => '{{ data.cpd_footer_color }}'
     );
     ?>
     <script type="text/html" id="tmpl-cpd-color-scheme">

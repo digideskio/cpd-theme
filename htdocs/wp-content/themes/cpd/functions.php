@@ -1,6 +1,32 @@
 <?php
 
 /**
+ * Cleanup Twenty Fifteen
+ */
+
+function cpd_cleanup_twentyfifteen()
+{
+    remove_theme_support('custom-background');
+    remove_theme_support('custom-header');
+
+    unregister_nav_menu('primary');
+    unregister_nav_menu('social');
+}
+add_action('init', 'cpd_cleanup_twentyfifteen');
+
+/**
+ * Set-up CPD
+ */
+function cpd_setup()
+{
+    // Add in our footer menu
+    register_nav_menus( array(
+        'footer' => __( 'Footer Menu',      'cpd'),
+    ) );
+}
+add_action('after_setup_theme','cpd_setup');
+
+/**
  * Enqueue assets
  */
 function cpd_enqueue_assets()
@@ -24,17 +50,6 @@ function cpd_enqueue_assets()
     wp_enqueue_script('footer', get_stylesheet_directory_uri() . '/js/footer.min.js', array('jquery', 'jquery-ui'), '0.1', true);
 }
 add_action('wp_enqueue_scripts', 'cpd_enqueue_assets');
-
-/**
- * Cleanup Twenty Fifteen
- */
-
-function cpd_cleanup_twentyfifteen()
-{
-    remove_theme_support('custom-background');
-    remove_theme_support('custom-header');
-}
-add_action( 'init', 'cpd_cleanup_twentyfifteen' );
 
 /**
  * Additional dependencies
