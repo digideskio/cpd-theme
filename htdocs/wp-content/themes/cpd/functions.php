@@ -5,6 +5,11 @@
  */
 function cpd_enqueue_assets()
 {
+    // Get our font stacks and Google Fonts URL
+    $fonts = cpd_get_fonts();
+
+    // Enqueue the additional fonts
+    wp_enqueue_style( 'cpd-fonts', $fonts['url'], array(), null );
 
     // Parent theme CSS
     wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');

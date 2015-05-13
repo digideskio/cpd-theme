@@ -76,13 +76,13 @@
         ?>
 
         <?php
-            $show   = get_theme_mod('cpd_advisory_show', 0);
+            $show   = get_theme_mod('cpd_advisory_show');
             $notice = get_theme_mod('cpd_advisory_notice');
             if ($notice === '') {
                 $notice = 'No advisory notice text has been entered.';
             }
 
-            if ($show !== 0 || is_customize_preview()) {
+            if ($show || is_customize_preview()) {
                 ?>
                 <div class="advisory-notice">
                     <p><strong>Notice:</strong> <?php echo $notice; ?></p>

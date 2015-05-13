@@ -87,40 +87,53 @@ add_action('customize_register', 'cpd_customize_intro', 22);
 /**
  * Customizer options - Top & Bottom Sections
  */
-function cpd_customize_top_bottom($wp_customize)
+function cpd_customize_fonts($wp_customize)
 {
-    $color_scheme = twentyfifteen_get_color_scheme();
-
-    $wp_customize->add_section('cpd_top_bottom', array(
-        'title'    => __('Top & Bottom Area', 'cpd'),
+    $wp_customize->add_section('cpd_fonts', array(
+        'title'    => __('Fonts', 'cpd'),
         'priority' => 30
     ));
 
-    // $wp_customize->add_setting('cpd_top_menu', array(
-    //     'default'        => '',
-    // ));
+    // Body Text
+    $wp_customize->add_setting('cpd_font_body', array(
+        'default' => 'noto-sans'
+    ));
 
-    // // Top Menu
-    // $wp_customize->add_control(new CPD_Customize_Textarea_Control($wp_customize, 'cpd_top_menu', array(
-    //     'label'    => __('Top Menu', 'cpd'),
-    //     'section'  => 'cpd_top_bottom_menus',
-    //     'settings' => 'cpd_top_menu',
-    //     'type'     => 'select'
-    // )));
+    $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'cpd_font_body', array(
+        'label'       => __('Body', 'cpd'),
+        'description' => 'Set the font to be used for the body text.',
+        'section'     => 'cpd_fonts',
+        'settings'    => 'cpd_font_body',
+        'type'        => 'select',
+            'choices'    => array(
+                'noto-serif'  => 'Noto Serif',
+                'pt-serif'    => 'PT Serif',
+                'noto-sans'   => 'Noto Sans',
+                'open-sans'   => 'Open Sans',
+            )
+    )));
 
-    // $wp_customize->add_setting('cpd_bottom_menu', array(
-    //     'default'        => '',
-    // ));
+    // Heading Text
+    $wp_customize->add_setting('cpd_font_heading', array(
+        'default' => 'noto-serif'
+    ));
 
-    // // Bottom Menu
-    // $wp_customize->add_control(new CPD_Customize_Textarea_Control($wp_customize, 'cpd_bottom_menu', array(
-    //     'label'    => __('Bottom Menu', 'cpd'),
-    //     'section'  => 'cpd_top_bottom_menus',
-    //     'settings' => 'cpd_bottom_menu',
-    //     'type'     => 'select'
-    // )));
+    $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'cpd_font_heading', array(
+        'label'       => __('Headings', 'cpd'),
+        'description' => 'Set the font to be used for the headings.',
+        'section'     => 'cpd_fonts',
+        'settings'    => 'cpd_font_heading',
+        'type'        => 'select',
+            'choices'    => array(
+                'noto-serif'  => 'Noto Serif',
+                'pt-serif'    => 'PT Serif',
+                'noto-sans'   => 'Noto Sans',
+                'open-sans'   => 'Open Sans',
+            )
+    )));
+
 }
-add_action('customize_register', 'cpd_customize_top_bottom', 23);
+add_action('customize_register', 'cpd_customize_fonts', 23);
 
 /**
  * Customizer options - Header & Sidebar
@@ -386,6 +399,7 @@ add_action('customize_register', 'cpd_customize_advisory', 26);
 
 /**
  * Add/Remove Colour Schemes
+ * ---------------------------------------
  * 6.  Widget Link Background Color
  * 7.  Widget Link Background Color Alt
  * 8.  Widget Link Color
@@ -401,10 +415,11 @@ add_action('customize_register', 'cpd_customize_advisory', 26);
  * 18. Site Title & Tagline Color
  * 19. Advisory Notice Background Color
  * 20. Advisory Notice Text Color
+ * ---------------------------------------
  */
 function cpd_color_schemes($schemes)
 {
-    // Remove out the schemes that ship with Twenty Fifteen
+    // Remove the schemes that ship with Twenty Fifteen
     foreach ($schemes as $key => $scheme) {
         unset($schemes[$key]);
     }
@@ -472,7 +487,7 @@ add_filter('twentyfifteen_color_schemes', 'cpd_color_schemes');
 /**
  * Enqueues front-end CSS for a CPD specific color scheme.
  */
-function cpd_color_scheme_css()
+function cpd_enqueue_css()
 {
     $color_scheme_option = get_theme_mod('color_scheme', 'default');
 
@@ -481,8 +496,7 @@ function cpd_color_scheme_css()
         return;
     }
 
-    $color_scheme = twentyfifteen_get_color_scheme();
-
+    // Set the current colors based on the saved options
     $colors = array(
         'cpd_widget_link_bg_color'     => get_theme_mod('cpd_widget_link_bg_color'),
         'cpd_widget_link_bg_color_alt' => get_theme_mod('cpd_widget_link_bg_color_alt'),
@@ -501,18 +515,96 @@ function cpd_color_scheme_css()
         'cpd_advisory_color'           => get_theme_mod('cpd_advisory_color')
     );
 
-    $color_scheme_css = cpd_get_color_scheme_css($colors);
+    // Get our font stacks and Google Fonts URL
+    $font_data = cpd_get_fonts();
 
-    wp_add_inline_style('cpd-style', $color_scheme_css);
+    // Enqueue the additional fonts
+    wp_enqueue_style( 'cpd-customizer-fonts', $font_data['url'], array(), null );
+
+    // Fetch our CSS output
+    $css_output = cpd_get_css($colors, $font_data['stacks']);
+
+    // Add the inline CS
+    wp_add_inline_style('cpd-style', $css_output);
 }
-add_action('wp_enqueue_scripts', 'cpd_color_scheme_css', 100);
+add_action('wp_enqueue_scripts', 'cpd_enqueue_css', 100);
+
+/**
+ * Returns Font stack selections and an encoded Google Fonts URL
+ */
+function cpd_get_fonts()
+{
+    $fonts_stacks  = array();
+    $fonts_enqueue = array();
+    $fonts_url     = '';
+    $pattern       = "/^'(.*)'/";
+
+    // Get the current font choices
+    $font_choices = array(
+        'body'    => get_theme_mod('cpd_font_body'),
+        'heading' => get_theme_mod('cpd_font_heading'),
+    );
+
+    // Let's get the relevant stack for the body and heading choices
+    foreach ($font_choices as $type => $choice) {
+
+        switch ($choice) {
+            case 'noto-serif':
+                $chosen = "'Noto Serif', serif";
+            break;
+
+            case 'pt-serif':
+                $chosen = "'PT Serif', serif";
+            break;
+
+            case 'noto-sans':
+                $chosen = "'Noto Sans', sans-serif";
+            break;
+
+            case 'open-sans':
+                $chosen = "'Open Sans', sans-serif";
+            break;
+
+            default:
+                if ($type === 'body') {
+                    $chosen = "'Noto Sans', sans-serif";
+                } else {
+                    $chosen = "'Noto Serif', serif";
+                }
+            break;
+        }
+
+        // Now we can pass these for output
+        $fonts_stacks[$type]    = $chosen;
+
+        // Add prepare the strings for the Google Fonts URL
+        $pos = strpos($chosen, 'Noto');
+        if ($pos === false) {
+            preg_match($pattern, $chosen, $matches);
+            $fonts_enqueue[] = $matches[1] . ":400italic,700italic,400,700";
+        }
+    };
+
+    // Construct our Google Fonts URL
+    if ($fonts_enqueue) {
+        $fonts_url = add_query_arg(array(
+            'family' => urlencode(implode( '|', array_unique($fonts_enqueue))),
+        ), '//fonts.googleapis.com/css' );
+    }
+
+    // Prepare the data to send back
+    $results = array(
+        'stacks' => $fonts_stacks,
+        'url'    => $fonts_url);
+
+    return $results;
+}
 
 /**
  * Returns CSS for the CPD color schemes.
  */
-function cpd_get_color_scheme_css($colors)
+function cpd_get_css($colors, $fonts)
 {
-
     $css = <<<CSS
     /* CPD Color Scheme */
 
@@ -524,6 +616,17 @@ function cpd_get_color_scheme_css($colors)
     /* Body Background Color (Sidebar) */
     html body:before {
         background-color: {$colors['cpd_sidebar_bg_color']};
+    }
+
+    /* Fonts */
+    body,
+    .site-description {
+        font-family: {$fonts['body']};
+    }
+
+    h1, h2, h3, h4, h5, h6,
+    .site-title {
+        font-family: {$fonts['heading']};
     }
 
     /* Site Title & Tagline Color */
@@ -649,11 +752,68 @@ function cpd_get_color_scheme_css($colors)
         color: {$colors['cpd_article_color']};
     }
 
-    blockquote, .main-navigation .menu-item-description, .post-navigation .meta-nav, .post-navigation a, .post-navigation a:hover .post-title, .post-navigation a:focus .post-title, .image-navigation, .image-navigation a, .comment-navigation, .comment-navigation a, .widget, .author-heading, .taxonomy-description, .page-links > .page-links-title, .entry-caption, .comment-author, .comment-metadata, .comment-metadata a, .pingback .edit-link, .pingback .edit-link a, .post-password-form label, .comment-form label, .comment-notes, .comment-awaiting-moderation, .logged-in-as, .form-allowed-tags, .no-comments, .site-info, .site-info a, .wp-caption-text, .gallery-caption, .comment-list .reply a, .widecolumn label, .widecolumn .mu_register label {
+    blockquote,
+    .main-navigation .menu-item-description,
+    .post-navigation .meta-nav,
+    .post-navigation a,
+    .post-navigation a:hover .post-title,
+    .post-navigation a:focus .post-title,
+    .image-navigation, .image-navigation a,
+    .comment-navigation, .comment-navigation a,
+    .widget, .author-heading, .taxonomy-description,
+    .page-links > .page-links-title,
+    .entry-caption, .comment-author,
+    .comment-metadata, .comment-metadata a,
+    .pingback .edit-link,
+    .pingback .edit-link a,
+    .post-password-form label,
+    .comment-form label,
+    .comment-notes,
+    .comment-awaiting-moderation,
+    .logged-in-as,
+    .form-allowed-tags,
+    .no-comments,
+    .site-info,
+    .site-info a,
+    .wp-caption-text,
+    .gallery-caption,
+    .comment-list .reply a,
+    .widecolumn label,
+    .widecolumn .mu_register label {
         color: {$colors['cpd_article_color']} !important;
     }
 
-    pre, abbr[title], table, th, td, input, textarea, .main-navigation ul, .main-navigation li, .post-navigation, .post-navigation div + div, .pagination, .comment-navigation, .widget li, .widget_categories .children, .widget_nav_menu .sub-menu, .widget_pages .children, .site-header, .site-footer, .hentry + .hentry, .author-info, .entry-content .page-links a, .page-links > span, .page-header, .comments-area, .comment-list + .comment-respond, .comment-list article, .comment-list .pingback, .comment-list .trackback, .comment-list .reply a, .no-comments {
+    pre,
+    abbr[title],
+    table,
+    th,
+    td,
+    input,
+    textarea,
+    .main-navigation ul,
+    .main-navigation li,
+    .post-navigation,
+    .post-navigation div + div,
+    .pagination,
+    .comment-navigation,
+    .widget li,
+    .widget_categories .children,
+    .widget_nav_menu .sub-menu,
+    .widget_pages .children,
+    .site-header,
+    .site-footer,
+    .hentry + .hentry,
+    .author-info,
+    .entry-content .page-links a,
+    .page-links > span,
+    .page-header,
+    .comments-area,
+    .comment-list + .comment-respond,
+    .comment-list article,
+    .comment-list .pingback,
+    .comment-list .trackback,
+    .comment-list .reply a,
+    .no-comments {
         border-color: {$colors['cpd_article_color']} !important;
     }
 
@@ -691,7 +851,7 @@ CSS;
 /**
  * Output an Underscore template for generating CSS for the CPD color scheme.
  */
-function cpd_color_scheme_css_template()
+function cpd_css_template()
 {
     $colors = array(
         'cpd_widget_link_bg_color'     => '{{ data.cpd_widget_link_bg_color }}',
@@ -712,11 +872,11 @@ function cpd_color_scheme_css_template()
     );
     ?>
     <script type="text/html" id="tmpl-cpd-color-scheme">
-        <?php echo cpd_get_color_scheme_css($colors); ?>
+        <?php echo cpd_get_css($colors, $fonts); ?>
     </script>
     <?php
 }
-add_action('customize_controls_print_footer_scripts', 'cpd_color_scheme_css_template', 100);
+add_action('customize_controls_print_footer_scripts', 'cpd_css_template', 100);
 
 /**
  * Binds JS listener to make Customizer color_scheme control in CPD
