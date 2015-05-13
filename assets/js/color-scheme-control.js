@@ -17,11 +17,13 @@
 			'cpd_widget_heading_color',
 			'cpd_main_bg_color',
 			'cpd_article_bg_color',
-			'cpd_article_text_color',
+			'cpd_article_color',
 			'cpd_article_foot_bg_color',
-			'cpd_article_foot_text_color',
+			'cpd_article_foot_color',
 			'cpd_sidebar_bg_color',
-			'cpd_title_tagline_color'
+			'cpd_intro_color',
+			'cpd_advisory_bg_color',
+			'cpd_advisory_color'
 		],
 		colorSettings = colorSchemeKeys;
 
@@ -81,8 +83,8 @@
 						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[13] );
 
 					// Article Text Color.
-					api( 'cpd_article_text_color' ).set( colorSchemeCPD[value].colors[14] );
-					api.control( 'cpd_article_text_color' ).container.find( '.color-picker-hex' )
+					api( 'cpd_article_color' ).set( colorSchemeCPD[value].colors[14] );
+					api.control( 'cpd_article_color' ).container.find( '.color-picker-hex' )
 						.data( 'data-default-color', colorSchemeCPD[value].colors[14] )
 						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[14] );
 
@@ -93,8 +95,8 @@
 						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[15] );
 
 					// Article Text Color.
-					api( 'cpd_article_foot_text_color' ).set( colorSchemeCPD[value].colors[16] );
-					api.control( 'cpd_article_foot_text_color' ).container.find( '.color-picker-hex' )
+					api( 'cpd_article_foot_color' ).set( colorSchemeCPD[value].colors[16] );
+					api.control( 'cpd_article_foot_color' ).container.find( '.color-picker-hex' )
 						.data( 'data-default-color', colorSchemeCPD[value].colors[16] )
 						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[16] );
 
@@ -104,11 +106,23 @@
 						.data( 'data-default-color', colorSchemeCPD[value].colors[17] )
 						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[17] );
 
-					// Header & Sidebar Background Color.
-					api( 'cpd_title_tagline_color' ).set( colorSchemeCPD[value].colors[18] );
-					api.control( 'cpd_title_tagline_color' ).container.find( '.color-picker-hex' )
+					// Site Title & Tagline Text Color
+					api( 'cpd_intro_color' ).set( colorSchemeCPD[value].colors[18] );
+					api.control( 'cpd_intro_color' ).container.find( '.color-picker-hex' )
 						.data( 'data-default-color', colorSchemeCPD[value].colors[18] )
 						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[18] );
+
+					// Advisory Notice Background Color.
+					api( 'cpd_advisory_bg_color' ).set( colorSchemeCPD[value].colors[19] );
+					api.control( 'cpd_advisory_bg_color' ).container.find( '.color-picker-hex' )
+						.data( 'data-default-color', colorSchemeCPD[value].colors[19] )
+						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[19] );
+
+					// Advisory Notice Text Color.
+					api( 'cpd_advisory_color' ).set( colorSchemeCPD[value].colors[20] );
+					api.control( 'cpd_advisory_color' ).container.find( '.color-picker-hex' )
+						.data( 'data-default-color', colorSchemeCPD[value].colors[20] )
+						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[20] );
 				} );
 			}
 		}

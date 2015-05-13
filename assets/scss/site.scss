@@ -26,7 +26,9 @@ Text Domain: cpd
 @import "layout/main";
 
 // Module
+@import "module/advisory";
 @import "module/entry-content";
+@import "module/intro";
 @import "module/widgets";
 
 // Print

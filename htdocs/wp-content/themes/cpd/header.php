@@ -60,15 +60,28 @@
         </header><!-- .site-header -->
 
         <?php get_sidebar(); ?>
+
     </div><!-- .sidebar -->
 
     <div id="content" class="site-content">
 
         <?php
-        if ($tagpos === 'right') { ?>
-                <div class="intro right">
-                    <h1 class="site-title"><?php echo $name ?></h1>
-                    <p class="site-description"><?php echo $tagtext; ?></h2>
+            if ($tagpos === 'right') { ?>
+                    <div class="intro right">
+                        <h1 class="site-title"><?php echo $name ?></h1>
+                        <p class="site-description"><?php echo $tagtext; ?></h2>
+                    </div>
+                <?php
+            }
+        ?>
+
+        <?php
+            $advisory = get_theme_mod('cpd_advisory_notice');
+
+            if ($advisory !== '') {
+                ?>
+                <div class="advisory-notice">
+                    <p><?php echo $advisory; ?></p>
                 </div>
-            <?php
-        }
+            <?php }
+        ?>
