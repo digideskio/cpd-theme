@@ -54,9 +54,9 @@ htdocs/wp-content/plugins/.DS_Store
 htdocs/wp-content/mu-plugins/.DS_Store
 
 # ignore specific themes
-wp-content/themes/twentyten/
-wp-content/themes/twentyeleven/
-wp-content/themes/twentytwelve/
-wp-content/themes/twentythirteen/
-wp-content/themes/twentyfourteen/
+htdocs/wp-content/themes/twentyten/
+htdocs/wp-content/themes/twentyeleven/
+htdocs/wp-content/themes/twentytwelve/
+htdocs/wp-content/themes/twentythirteen/
+htdocs/wp-content/themes/twentyfourteen/
 # wp-content/themes/twentyfifteen/
