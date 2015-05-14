@@ -9,7 +9,6 @@ function cpd_cleanup_twentyfifteen()
     remove_theme_support('custom-background');
     remove_theme_support('custom-header');
 
-    unregister_nav_menu('primary');
     unregister_nav_menu('social');
 }
 add_action('init', 'cpd_cleanup_twentyfifteen');

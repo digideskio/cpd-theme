@@ -6,10 +6,14 @@
 }
 
 #main {
-    margin-top: 50px;
+    margin-top: 25px;
     padding: 0;
 
     @media (min-width: $tablet) {
-        margin-top: 50px;
+        margin-top: 8.3333%;
+    }
+
+    .advisory-notice + & {
+        margin-top: 8.3333%;
     }
 }

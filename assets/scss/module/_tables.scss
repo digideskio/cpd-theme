@@ -1,0 +1,63 @@
+table,
+th,
+td {
+    border: 0;
+}
+
+th, td {
+    font-size: 14px;
+    padding: .75em;
+}
+
+.ppd-archive-container {
+    margin-top: 25px;
+    padding: 0 8.3333%;
+
+    @media (min-width: $tablet) {
+        padding: 0 8.3333% 0 0;
+    }
+}
+
+.ppd-archive {
+    .date {
+        width: 12.5%;
+    }
+
+    .activity {
+        width: 17.5%;
+    }
+
+    .description {
+        width: 30%;
+    }
+
+    .points {
+        width: 10%;
+    }
+
+    .evidence {
+        width: 15%;
+
+        li {
+            margin-bottom: 5px;
+        }
+    }
+
+    .categories {
+        width: 15%;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    a {
+        border-bottom-width: 1px;
+        border-style: dotted;
+
+        &:hover,
+        &:focus {
+            opacity: .6;
+        }
+    }
+}

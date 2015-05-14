@@ -332,82 +332,99 @@ function cpd_customize_main($wp_customize)
 add_action('customize_register', 'cpd_customize_main', 25);
 
 /**
- * Customizer options - Advisory Notice
+ * Customizer options - Tables
  */
-function cpd_customize_advisory($wp_customize)
+function cpd_customize_tables($wp_customize)
 {
     $color_scheme = twentyfifteen_get_color_scheme();
 
-    $wp_customize->add_section('cpd_advisory' , array(
-        'title'       => __('Advisory Notice', 'cpd'),
-        'priority'    => 60
+    $wp_customize->add_section('cpd_tables' , array(
+        'title'       => __('Table Content', 'cpd'),
+        'priority'    => 55
     ));
 
-    // Show Advisory
-    $wp_customize->add_setting('cpd_advisory_show', array(
-        'transport'      => 'postMessage',
-    ));
-
-    $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'cpd_advisory_show', array(
-        'label'    => __('Show notice?', 'cpd'),
-        'section'  => 'cpd_advisory',
-        'settings' => 'cpd_advisory_show',
-        'type'     => 'checkbox'
-    )));
-
-    // Advisory Notice Text
-    $wp_customize->add_setting('cpd_advisory_notice', array(
-        'transport' => 'postMessage',
-    ));
-
-    $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'cpd_advisory_notice', array(
-        'label'    => __('Notice Text', 'cpd'),
-        'section'  => 'cpd_advisory',
-        'settings' => 'cpd_advisory_notice',
-        'type'     => 'textarea'
-    )));
-
-    // Advisory Background Colour
-    $wp_customize->add_setting('cpd_advisory_bg_color', array(
-        'default'           => $color_scheme[19],
+    // Table Header Background Colour
+    $wp_customize->add_setting('cpd_table_head_bg_color', array(
+        'default'           => $color_scheme[24],
         'sanitize_callback' => 'sanitize_hex_color',
         'transport'         => 'postMessage',
     ));
 
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_advisory_bg_color', array(
-        'label'       => __('Background Colour', 'cpd'),
-        'description' => __('Set the background colour of the advisory notice.', 'cpd'),
-        'section'     => 'cpd_advisory',
-        'settings'    => 'cpd_advisory_bg_color'
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_table_head_bg_color', array(
+        'label'       => __('Table Header Background Colour', 'cpd'),
+        'description' => __('Set the background colour for the table header.', 'cpd'),
+        'section'     => 'cpd_tables',
+        'settings'    => 'cpd_table_head_bg_color'
     )));
 
-     // Advisory Text Colour
-    $wp_customize->add_setting('cpd_advisory_color', array(
-        'default'           => $color_scheme[15],
+    // Table Header Text Colour
+    $wp_customize->add_setting('cpd_table_head_color', array(
+        'default'           => $color_scheme[25],
         'sanitize_callback' => 'sanitize_hex_color',
         'transport'         => 'postMessage',
     ));
 
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_advisory_color', array(
-        'label'       => __('Text Colour', 'cpd'),
-        'description' => __('Set the text colour of the advisory notice.', 'cpd'),
-        'section'     => 'cpd_advisory',
-        'settings'    => 'cpd_advisory_color'
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_table_head_color', array(
+        'label'       => __('Table Header Text Colour', 'cpd'),
+        'description' => __('Set the text colour for the table header.', 'cpd'),
+        'section'     => 'cpd_tables',
+        'settings'    => 'cpd_table_head_color'
+    )));
+
+    // Table Row Background Colour
+    $wp_customize->add_setting('cpd_table_row_bg_color', array(
+        'default'           => $color_scheme[26],
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_table_row_bg_color', array(
+        'label'       => __('Table Header Background Colour', 'cpd'),
+        'description' => __('Set the background colour for all table rows.', 'cpd'),
+        'section'     => 'cpd_tables',
+        'settings'    => 'cpd_table_row_bg_color'
+    )));
+
+    // Table Row Text Colour
+    $wp_customize->add_setting('cpd_table_row_color', array(
+        'default'           => $color_scheme[27],
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_table_row_color', array(
+        'label'       => __('Table Row Text Colour', 'cpd'),
+        'description' => __('Set the text colour for all table rows.', 'cpd'),
+        'section'     => 'cpd_tables',
+        'settings'    => 'cpd_table_row_color'
+    )));
+
+    // Table Row Link Colour
+    $wp_customize->add_setting('cpd_table_row_link_color', array(
+        'default'           => $color_scheme[28],
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_table_row_link_color', array(
+        'label'       => __('Table Row Link Colour', 'cpd'),
+        'description' => __('Set the text colour for all table row links.', 'cpd'),
+        'section'     => 'cpd_tables',
+        'settings'    => 'cpd_table_row_link_color'
     )));
 }
-add_action('customize_register', 'cpd_customize_advisory', 26);
+add_action('customize_register', 'cpd_customize_tables', 26);
 
 /**
  * Customizer options - Footer
  */
 function cpd_customize_footer($wp_customize)
 {
-
     $color_scheme = twentyfifteen_get_color_scheme();
 
     $wp_customize->add_section('cpd_footer' , array(
         'title'       => __('Footer Area', 'cpd'),
-        'priority'    => 55
+        'priority'    => 50
     ));
 
     // Footer Background Colour
@@ -476,6 +493,73 @@ function cpd_customize_footer($wp_customize)
     )));
 }
 add_action('customize_register', 'cpd_customize_footer', 27);
+
+/**
+ * Customizer options - Advisory Notice
+ */
+function cpd_customize_advisory($wp_customize)
+{
+    $color_scheme = twentyfifteen_get_color_scheme();
+
+    $wp_customize->add_section('cpd_advisory' , array(
+        'title'       => __('Advisory Notice', 'cpd'),
+        'priority'    => 60
+    ));
+
+    // Show Advisory
+    $wp_customize->add_setting('cpd_advisory_show', array(
+        'transport'      => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'cpd_advisory_show', array(
+        'label'    => __('Show notice?', 'cpd'),
+        'section'  => 'cpd_advisory',
+        'settings' => 'cpd_advisory_show',
+        'type'     => 'checkbox'
+    )));
+
+    // Advisory Notice Text
+    $wp_customize->add_setting('cpd_advisory_notice', array(
+        'transport' => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'cpd_advisory_notice', array(
+        'label'    => __('Notice Text', 'cpd'),
+        'section'  => 'cpd_advisory',
+        'settings' => 'cpd_advisory_notice',
+        'type'     => 'textarea'
+    )));
+
+    // Advisory Background Colour
+    $wp_customize->add_setting('cpd_advisory_bg_color', array(
+        'default'           => $color_scheme[19],
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_advisory_bg_color', array(
+        'label'       => __('Background Colour', 'cpd'),
+        'description' => __('Set the background colour of the advisory notice.', 'cpd'),
+        'section'     => 'cpd_advisory',
+        'settings'    => 'cpd_advisory_bg_color'
+    )));
+
+     // Advisory Text Colour
+    $wp_customize->add_setting('cpd_advisory_color', array(
+        'default'           => $color_scheme[15],
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'postMessage',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'cpd_advisory_color', array(
+        'label'       => __('Text Colour', 'cpd'),
+        'description' => __('Set the text colour of the advisory notice.', 'cpd'),
+        'section'     => 'cpd_advisory',
+        'settings'    => 'cpd_advisory_color'
+    )));
+}
+add_action('customize_register', 'cpd_customize_advisory', 28);
+
 /**
  * Add/Remove Colour Schemes
  * ---------------------------------------
@@ -533,7 +617,12 @@ function cpd_color_schemes($schemes)
             '#ffffff', // 20
             '#414042', // 21
             '#030000', // 22
-            '#ffffff'  // 23
+            '#ffffff', // 23
+            '#030000', // 24
+            '#ffffff', // 25
+            '#414042', // 26
+            '#ffffff', // 27
+            '#ffffff'  // 28
         ),
       );
 
@@ -564,7 +653,12 @@ function cpd_color_schemes($schemes)
             '#ffffff', // 20
             '#0066b3', // 21
             '#030000', // 22
-            '#ffffff'  // 23
+            '#ffffff', // 23
+            '#030000', // 24
+            '#ffffff', // 25
+            '#ffffff', // 26
+            '#030000', // 27
+            '#0066b3'  // 28
         ),
       );
 
@@ -603,8 +697,17 @@ function cpd_enqueue_css()
         'cpd_advisory_color'           => get_theme_mod('cpd_advisory_color'),
         'cpd_footer_bg_color'          => get_theme_mod('cpd_footer_bg_color'),
         'cpd_footer_bottom_bg_color'   => get_theme_mod('cpd_footer_bottom_bg_color'),
-        'cpd_footer_color'             => get_theme_mod('cpd_footer_color')
+        'cpd_footer_color'             => get_theme_mod('cpd_footer_color'),
+        'cpd_table_head_bg_color'      => get_theme_mod('cpd_table_head_bg_color'),
+        'cpd_table_head_color'         => get_theme_mod('cpd_table_head_color'),
+        'cpd_table_row_bg_color'       => get_theme_mod('cpd_table_row_bg_color'),
+        'cpd_table_row_color'          => get_theme_mod('cpd_table_row_color'),
+        'cpd_table_row_link_color'     => get_theme_mod('cpd_table_row_link_color')
     );
+
+    // Alternative row colour - RGBA version of the main row background colour
+    $color_row_alt_color_rgb              = twentyfifteen_hex2rgb($colors['cpd_table_row_bg_color']);
+    $colors['cpd_table_row_alt_bg_color'] = vsprintf( 'rgba( %1$s, %2$s, %3$s, 0.85)', $color_row_alt_color_rgb);
 
     // Get our font stacks and Google Fonts URL
     $font_data = cpd_get_fonts();
@@ -954,6 +1057,45 @@ function cpd_get_css($colors, $fonts)
         color: {$colors['cpd_footer_color']};
      }
 
+     /* Tables */
+
+     .ppd-archive th {
+        background-color: {$colors['cpd_table_head_bg_color']};
+        color: {$colors['cpd_table_head_color']};
+     }
+
+     .ppd-archive .odd {
+        background-color: {$colors['cpd_table_row_bg_color']};
+     }
+
+     .ppd-archive .even {
+        background-color: {$colors['cpd_table_row_alt_bg_color']};
+     }
+
+     .ppd-archive .odd,
+     .ppd-archive .even {
+        color: {$colors['cpd_table_row_color']};
+     }
+
+    .ppd-archive .odd a,
+    .ppd-archive .even a {
+        border-color: {$colors['cpd_table_row_link_color']};
+    }
+
+    .ppd-archive .odd a,
+    .ppd-archive .odd a:hover,
+    .ppd-archive .odd a:focus,
+    .ppd-archive .even a,
+    .ppd-archive .even a:hover,
+    .ppd-archive .even a:focus {
+        color: {$colors['cpd_table_row_link_color']};
+    }
+
+    .ppd-archive a {
+        border-color: {$colors['cpd_table_row_link_color']};
+        color: {$colors['cpd_table_row_link_color']};
+    }
+
 CSS;
 
     return $css;
@@ -982,7 +1124,13 @@ function cpd_css_template()
         'cpd_advisory_color'           => '{{ data.cpd_advisory_color }}',
         'cpd_footer_bg_color'          => '{{ data.cpd_footer_bg_color }}',
         'cpd_footer_bottom_bg_color'   => '{{ data.cpd_footer_bottom_bg_color }}',
-        'cpd_footer_color'             => '{{ data.cpd_footer_color }}'
+        'cpd_footer_color'             => '{{ data.cpd_footer_color }}',
+        'cpd_table_head_bg_color'      => '{{ data.cpd_table_head_bg_color }}',
+        'cpd_table_head_color'         => '{{ data.cpd_table_head_color }}',
+        'cpd_table_row_bg_color'       => '{{ data.cpd_table_row_bg_color }}',
+        'cpd_table_row_alt_bg_color'   => '{{ data.cpd_table_row_alt_bg_color }}',
+        'cpd_table_row_color'          => '{{ data.cpd_table_row_color }}',
+        'cpd_table_row_link_color'     => '{{ data.cpd_table_row_link_color }}',
     );
     ?>
     <script type="text/html" id="tmpl-cpd-color-scheme">

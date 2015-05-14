@@ -6,7 +6,7 @@
 
 ( function( api ) {
 	// I've set colorSettings to be the same as colorSchemeKeys as there was no need for
-	// two completely identical arrays
+	// two completely identical arrays as per the Twenty Fifteen code!
 	var cssTemplate = wp.template( 'cpd-color-scheme' ),
 		colorSchemeKeys = [
 			'cpd_widget_link_bg_color',
@@ -26,7 +26,12 @@
 			'cpd_advisory_color',
 			'cpd_footer_bg_color',
 			'cpd_footer_bottom_bg_color',
-			'cpd_footer_color'
+			'cpd_footer_color',
+			'cpd_table_head_bg_color',
+			'cpd_table_head_color',
+			'cpd_table_row_bg_color',
+			'cpd_table_row_color',
+			'cpd_table_row_link_color'
 		],
 		colorSettings = colorSchemeKeys;
 
@@ -144,6 +149,36 @@
 					api.control( 'cpd_footer_color' ).container.find( '.color-picker-hex' )
 						.data( 'data-default-color', colorSchemeCPD[value].colors[23] )
 						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[23] );
+
+					// Table Head Background Colur
+					api( 'cpd_table_head_bg_color' ).set( colorSchemeCPD[value].colors[24] );
+					api.control( 'cpd_table_head_bg_color' ).container.find( '.color-picker-hex' )
+						.data( 'data-default-color', colorSchemeCPD[value].colors[24] )
+						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[24] );
+
+					// Table Head Text Colour.
+					api( 'cpd_table_head_color' ).set( colorSchemeCPD[value].colors[25] );
+					api.control( 'cpd_table_head_color' ).container.find( '.color-picker-hex' )
+						.data( 'data-default-color', colorSchemeCPD[value].colors[25] )
+						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[25] );
+
+					// Table Row Background Colur
+					api( 'cpd_table_row_bg_color' ).set( colorSchemeCPD[value].colors[26] );
+					api.control( 'cpd_table_row_bg_color' ).container.find( '.color-picker-hex' )
+						.data( 'data-default-color', colorSchemeCPD[value].colors[26] )
+						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[26] );
+
+					// Table Row Text Colour.
+					api( 'cpd_table_row_color' ).set( colorSchemeCPD[value].colors[27] );
+					api.control( 'cpd_table_row_color' ).container.find( '.color-picker-hex' )
+						.data( 'data-default-color', colorSchemeCPD[value].colors[27] )
+						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[27] );
+
+					// Table Row Link Colour.
+					api( 'cpd_table_row_link_color' ).set( colorSchemeCPD[value].colors[28] );
+					api.control( 'cpd_table_row_link_color' ).container.find( '.color-picker-hex' )
+						.data( 'data-default-color', colorSchemeCPD[value].colors[28] )
+						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[28] );
 				} );
 			}
 		}

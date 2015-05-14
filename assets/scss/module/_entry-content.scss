@@ -1,4 +1,22 @@
+.page-header {
+    border: 0;
+
+    @media (min-width: $tablet) {
+        margin-left: 0;
+        margin-top: 25px;
+    }
+
+    .page-title {
+        font-size: 3.9rem;
+        line-height: 1.2308;
+    }
+}
+
 .hentry {
+    @media (min-width: $tablet) {
+        margin-left: 0;
+    }
+
     h1,
     h2,
     h3,
