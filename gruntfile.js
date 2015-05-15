@@ -11,7 +11,7 @@ module.exports = function(grunt) {
       data: {
 
         wpInfo: {
-    		  wp_theme_name: 'cpd',
+    		  wp_theme_name: 'aspire-cpd',
     		  wp_content: 'htdocs/wp-content'
         },
 
