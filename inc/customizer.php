@@ -23,6 +23,46 @@ function cpd_customize_cleanup($wp_customize)
 add_action('customize_register', 'cpd_customize_cleanup', 20);
 
 /**
+ * Restrict access to options for network admins only
+ */
+function cpd_restrict_access($wp_customize)
+{
+    // An array of sections we want participants/supervisors to access:
+    // just add the identifer if they need to have access to a section
+    $user_allowed = array(
+        'title_tagline',
+        'colors',
+    );
+
+    $super_allowed = array(
+        'sidebar-widgets-sidebar-1'
+    );
+
+    // Get all the sections
+    $sections = $wp_customize->sections();
+
+    // We just need the section identifiers
+    foreach ($sections as $key => $section) {
+
+        // Strip participants of privileges
+        if (!in_array($key, $user_allowed)) {
+            $wp_customize->get_section($key)->capability = 'manage_network';
+        }
+
+        // Then grant supervisors privileges
+        if (in_array($key, array_merge($user_allowed, $super_allowed))) {
+            $wp_customize->get_section($key)->capability = 'supervise_users';
+        }
+    }
+
+    // We don't want them to have access to the other title/tagline controls
+    $wp_customize->get_setting('blogdescription')->capability = 'manage_network';
+    $wp_customize->get_setting('cpd_tagline_pos')->capability = 'manage_network';
+    $wp_customize->get_setting('cpd_intro_color')->capability = 'manage_network';
+}
+add_action('customize_register', 'cpd_restrict_access', 100);
+
+/**
  * Customizer options - Branding
  */
 function cpd_customize_branding($wp_customize)
@@ -30,7 +70,6 @@ function cpd_customize_branding($wp_customize)
     $wp_customize->add_section('cpd_branding', array(
         'title'    => __('Branding', 'cpd'),
         'priority' => 10,
-        // 'capability'  => 'manage_network'
     ));
 
     $wp_customize->add_setting('cpd_logo');
@@ -591,7 +630,7 @@ function cpd_color_schemes($schemes)
     }
 
     // White
-    $schemes['cpd_sheff_grey'] = array(
+    $schemes['default'] = array(
         'label'  => __('Sheffield - Grey', 'cpd'),
         'colors' => array(
             '#f1f1f1',
@@ -707,7 +746,7 @@ function cpd_enqueue_css()
 
     // Alternative row colour - RGBA version of the main row background colour
     $color_row_alt_color_rgb              = twentyfifteen_hex2rgb($colors['cpd_table_row_bg_color']);
-    $colors['cpd_table_row_alt_bg_color'] = vsprintf( 'rgba( %1$s, %2$s, %3$s, 0.85)', $color_row_alt_color_rgb);
+    $colors['cpd_table_row_alt_bg_color'] = vsprintf('rgba( %1$s, %2$s, %3$s, 0.85)', $color_row_alt_color_rgb);
 
     // Get our font stacks and Google Fonts URL
     $font_data = cpd_get_fonts();

@@ -70,9 +70,8 @@
             </div>
 
             <div class="right">
-                <p>&copy; <?php echo date('Y'); ?> <?php echo bloginfo('name'); ?></p>
-    <!--             <a href="<?php // echo esc_url( __( 'https://wordpress.org/', 'twentyfifteen' ) ); ?>"><?php // printf( __( 'Proudly powered by %s', 'twentyfifteen' ), 'WordPress' ); ?></a>.
-    -->        </div>
+                <p>&copy; <?php echo date('Y'); ?> <?php echo bloginfo('name'); ?>. Powered by <a href-"#" title="Aspire CPD">Aspire CPD</a></p>
+            </div>
 
         </div>
     </div>
