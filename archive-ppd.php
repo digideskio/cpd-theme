@@ -11,33 +11,41 @@ get_header(); ?>
 
 		<?php if ( have_posts() ) : ?>
 
-			<article class="hentry">
-				<header class="entry-header">
-                    <h2 class="entry-title">Activity Logs</h2>
-				</header><!-- .entry-header -->
+            <header class="page-header">
+                <h2 class="page-title">Activity Logs</h2>
+            </header><!-- .entry-header -->
 
-				<div class="entry-content">
+			<article class="ppd-archive-container">
 
-                <table id="ppd-archive" class="ppd-archive" style="font-size:10px;">
-					<tr>
-						<th>Date completed</th>
-						<th>PPD activity</th>
-						<th>Description</th>
-						<th>Value obtained</th>
-						<th>Points awarded</th>
-						<th>Evidence</th>
-						<th>Category of development</th>
-					</tr>
+                <table id="ppd-archive" class="ppd-archive">
+                    <thead>
+    					<tr class="header-row">
+    						<th class="date">Date <br/>Completed</th>
+    						<th class="activity">PPD <br/>Activity</th>
+                            <th class="description">Activity <br/>Description</th>
+    						<!-- <th>Value </br>Obtained</th> -->
+    						<th class="points">Points <br/>Awarded</th>
+    						<th class="evidence">Evidence <br/>Gathered</th>
+    						<th class="categories">Development </br>Categories</th>
+    					</tr>
+                    </thead>
 					<?php
+                    $i = 1;
                     // Start the Loop.
                     while ( have_posts() ) : the_post();
                         $date_completed    = get_post_meta( $post->ID, '_cpd_date_completed', true);
                         $points            = get_post_meta( $post->ID, '_cpd_points', true);
                         $evidence_group    = get_post_meta( $post->ID, '_cpd_group', false);
-                        $terms                = get_terms('development-category');
+                        $terms             = get_terms('development-category');
+
+                        if ($i % 2 == 0) {
+                            $row = 'even';
+                        } else {
+                            $row = 'odd';
+                        }
                         ?>
-							<tr>
-								<td>
+							<tr class="<?php echo $row; ?>">
+								<td class="date">
 									<?php
 
                                         if ( empty( $date_completed ) ) {
@@ -45,24 +53,29 @@ get_header(); ?>
 											Ongoing
 											<?php
                                         } else {
-                                            echo date( 'jS F, Y', $date_completed );
+                                            echo date( 'F jS, Y', $date_completed );
                                         }
 
                                     ?>
 								</td>
-								<td>
-									<?php the_title();?>
+								<td class="activity">
+									<a href="<?php the_permalink(); ?>"><?php the_title();?></a>
 								</td>
-								<td>
-									<?php the_excerpt();?>
+                                <td class="description">
+                                    <?php
+                                    $string  = wp_trim_words(get_the_excerpt(), 30, '');
+                                    $excerpt = trim($string, '"\':;,');
+                                    echo $excerpt; ?>...
+
+                                    <a class="more" href="<?php echo get_the_permalink(); ?>">Read More</a>
 								</td>
-								<td>
-									<?php the_content();?>
-								</td>
-								<td>
+								<!-- <td>
+									<?php //the_content();?>
+								</td> -->
+								<td class="points">
 									<?php echo $points;?>
 								</td>
-								<td>
+								<td class="evidence">
 									<?php
                                         if (    is_array( $evidence_group ) && count( $evidence_group ) > 0 ) {
                                             ?>
@@ -71,11 +84,11 @@ get_header(); ?>
                                                 foreach ($evidence_group as $evidence) {
                                                     if ($evidence['_cpd_evidence_type'] == 'upload') {
 
-                                                        $link            =    wp_get_attachment_url( $evidence['_cpd_evidence_file'] );
-                                                        $title            =    $link;
+                                                        $link  = wp_get_attachment_url( $evidence['_cpd_evidence_file'] );
+                                                        $title = $link;
 
                                                         if ( !empty( $evidence['_cpd_evidence_title'] ) ) {
-                                                            $title        =    $evidence['_cpd_evidence_title'];
+                                                            $title = $evidence['_cpd_evidence_title'];
                                                         }
 
                                                         ?>
@@ -84,20 +97,19 @@ get_header(); ?>
 
                                                     } elseif ($evidence['_cpd_evidence_type'] == 'journal') {
 
-                                                        $journal        =    get_post( $evidence['_cpd_evidence_journal'] );
-
-                                                        $link            =    get_permalink( $journal->ID );
-                                                        $title            =    $journal->post_title;
+                                                        $journal = get_post( $evidence['_cpd_evidence_journal'] );
+                                                        $link    = get_permalink( $journal->ID );
+                                                        $title   = $journal->post_title;
 
                                                         ?>
 														<li><a href="<?php echo $link;?>"><?php echo $title;?></a></li>
 														<?php
                                                     } elseif ($evidence['_cpd_evidence_type'] == 'url') {
-                                                        $link            =    $evidence['_cpd_evidence_url'];
-                                                        $title            =    $link;
+                                                        $link  = $evidence['_cpd_evidence_url'];
+                                                        $title = $link;
 
                                                         if ( !empty( $evidence['_cpd_evidence_title'] ) ) {
-                                                            $title        =    $evidence['_cpd_evidence_title'];
+                                                            $title = $evidence['_cpd_evidence_title'];
                                                         }
 
                                                         ?>
@@ -111,7 +123,7 @@ get_header(); ?>
                                         }
                                     ?>
 								</td>
-								<td>
+								<td class="categories">
 									<?php
                                     if ( is_array( $terms ) && count( $terms ) > 0 ) {
                                         ?>
@@ -119,7 +131,7 @@ get_header(); ?>
 												<?php
                                                 foreach ($terms as $term) {
                                                     ?>
-													<li><?php echo $term->name;?></li>
+													<li><span><?php echo $term->name;?></span></li>
 													<?php
                                                 }
                                                 ?>
@@ -133,11 +145,13 @@ get_header(); ?>
 						<?php
 
                     // End the loop.
+                    $i++;
                     endwhile;
                     ?>
 				</table>
-				</div><!-- .entry-content -->
-			</article><!-- #post-## -->
+
+			</article>
+
 			<?php
             // Previous/next page navigation.
             the_posts_pagination( array(
