@@ -30,7 +30,7 @@
             <div class="branding">
                 <?php
                     $logo    = get_theme_mod('cpd_logo');
-                    $name    = get_bloginfo('name','display') . " CPD Hub";
+                    $name    = get_bloginfo('name','display');
                     $tagtext = get_bloginfo( 'description','display');
                     $tagpos  = get_theme_mod('cpd_tagline_pos');
 
