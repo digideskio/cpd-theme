@@ -3,10 +3,6 @@
  * The template for displaying the footer
  *
  * Contains the closing of the "site-content" div and all content after.
- *
- * @package WordPress
- * @subpackage Twenty_Fifteen
- * @since Twenty Fifteen 1.0
  */
 ?>
 
@@ -17,30 +13,24 @@
 
     <footer id="colophon" role="contentinfo">
 
-        <?php
-            /**
-             * Fires before the Twenty Fifteen footer text for footer customization.
-             *
-             * @since Twenty Fifteen 1.0
-             */
-            do_action('cpd_footer');
-        ?>
+        <?php do_action('cpd_footer'); ?>
 
         <div class="credits">
 
             <?php
-            $logo = get_theme_mod('cpd_logo');
-            if ($logo) { ?>
+            $watermark = get_theme_mod('cpd_watermark');
+            if ($watermark) { ?>
                 <div class="left">
-                    <img src='<?php echo esc_url($logo); ?>' alt="<?php echo get_bloginfo('name'); ?>">
+                    <img src='<?php echo esc_url($watermark); ?>' alt="<?php echo get_bloginfo('name'); ?>">
                 </div>
                 <?php
             } ?>
 
             <?php
             $credit = get_theme_mod('cpd_credit');
-            $url    = get_theme_mod('cpd_credit_url');
-            if ($credit) { ?>
+            if ($credit) {
+                $url    = get_theme_mod('cpd_credit_url');
+                ?>
                 <div class="right">
                     <?php if ($url) { ?>
                         <a href="<?php echo $url; ?>" target="_title"><img src='<?php echo esc_url($credit); ?>'></a>
@@ -60,17 +50,20 @@
         <div class="bottom">
 
             <div class="left">
-                <?php
-                $args = array(
-                    'theme_location' => 'footer',
-                    'container'      => '',
-                    'menu_class'     => 'footer-menu'
-                );
-                wp_nav_menu($args); ?>
+                <ul class="footer-menu">
+                    <li><a href="<?php echo network_site_url(); ?>">Back to Main Blog</a></li>
+                    <?php
+                    $args = array(
+                        'theme_location' => 'footer',
+                        'container'      => '',
+                        'items_wrap'     => '%3$s'
+                    );
+                    wp_nav_menu($args); ?>
+                </ul>
             </div>
 
             <div class="right">
-                <p>&copy; <?php echo date('Y'); ?> <?php echo bloginfo('name'); ?>. Powered by <a href-"#" title="Aspire CPD">Aspire CPD</a></p>
+                <p>&copy; <?php echo date('Y'); ?> <?php echo bloginfo('name'); ?>. Powered by <a href="#" title="Aspire CPD">Aspire CPD</a>.</p>
             </div>
 
         </div>

@@ -3,10 +3,6 @@
  * The template for displaying the header
  *
  * Displays all of the head element and everything up until the "site-content" div.
- *
- * @package WordPress
- * @subpackage Twenty_Fifteen
- * @since Twenty Fifteen 1.0
  */
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js">
@@ -35,10 +31,8 @@
                     $tagpos  = get_theme_mod('cpd_tagline_pos');
 
                     if ($logo) { ?>
-
-                        <a href='<?php echo esc_url(home_url('/')); ?>' title='<?php echo esc_attr($name); ?>' rel='home'>
-                        <img src='<?php echo esc_url($logo); ?>' alt='<?php echo esc_attr($name); ?>'></a>
-
+                            <a href='<?php echo esc_url(home_url('/')); ?>' title='<?php echo esc_attr($name); ?>' rel='home'>
+                            <img src='<?php echo esc_url($logo); ?>' alt='<?php echo esc_attr($name); ?>'></a>
                         <?php
                     } ?>
 
@@ -56,7 +50,7 @@
                             <?php
                             }
                         }
-                ?>
+                    ?>
         </header><!-- .site-header -->
 
         <?php get_sidebar(); ?>

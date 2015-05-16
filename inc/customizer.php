@@ -23,7 +23,7 @@ function cpd_customize_cleanup($wp_customize)
 add_action('customize_register', 'cpd_customize_cleanup', 20);
 
 /**
- * Restrict access to options for network admins only
+ * Restrict access to options for network admins and supervisors
  */
 function cpd_restrict_access($wp_customize)
 {
@@ -77,6 +77,7 @@ function cpd_customize_branding($wp_customize)
         'priority' => 10,
     ));
 
+    // Main Logo
     $wp_customize->add_setting('cpd_logo');
 
     $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'cpd_logo', array(
@@ -84,6 +85,16 @@ function cpd_customize_branding($wp_customize)
         'description' => 'Upload a custom logo that will be visible in the header/sidebar area. Maximum width should be 248 pixels.',
         'section'     => 'cpd_branding',
         'settings'    => 'cpd_logo',
+    )));
+
+    // Watermark Logo
+    $wp_customize->add_setting('cpd_watermark');
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'cpd_watermark', array(
+        'label'       => __('Watermark', 'cpd'),
+        'description' => 'Upload a custom logo that will be visible in the footer area.',
+        'section'     => 'cpd_branding',
+        'settings'    => 'cpd_watermark',
     )));
 }
 add_action('customize_register', 'cpd_customize_branding', 21);
@@ -887,7 +898,10 @@ function cpd_get_css($colors, $fonts)
 
     .widget li:hover,
     .widget li:focus,
-    .widget li.current_page_item {
+    .widget li.current_page_item,
+    .widget li:hover a,
+    .widget li:focus a,
+    .widget li.current_page_item a {
         background-color: {$colors['cpd_widget_link_bg_color_alt']};
         color: {$colors['cpd_widget_link_color_alt']};
     }
@@ -899,7 +913,7 @@ function cpd_get_css($colors, $fonts)
     }
 
     .widget .recentcomments {
-        font-family: "Noto Sans", sans-serif;
+        font-family: {$fonts['heading']};
     }
 
     .widget .recentcomments,
@@ -928,6 +942,11 @@ function cpd_get_css($colors, $fonts)
     }
 
     /* Search Widget */
+
+    .widget .search-form {
+        color: {$colors['cpd_widget_link_color']};
+    }
+
     .widget .search-field {
         background-color: {$colors['cpd_widget_link_bg_color']};
         color: {$colors['cpd_widget_link_color']};
@@ -968,12 +987,18 @@ function cpd_get_css($colors, $fonts)
 
     /* Article Text */
     .site-main .entry-content,
-    .site-main h1, .site-main h1 a,
-    .site-main h2, .site-main h2 a,
-    .site-main h3, .site-main h3 a,
-    .site-main h4, .site-main h4 a,
-    .site-main h5, .site-main h5 a,
-    .site-main h6, .site-main h6 a,
+    .site-main h1,
+    .site-main h1 a,
+    .site-main h2,
+    .site-main h2 a,
+    .site-main h3,
+    .site-main h3 a,
+    .site-main h4,
+    .site-main h4 a,
+    .site-main h5,
+    .site-main h5 a,
+    .site-main h6,
+    .site-main h6 a,
     .site-main .comment-content {
         color: {$colors['cpd_article_color']};
     }
@@ -1070,56 +1095,60 @@ function cpd_get_css($colors, $fonts)
     .site-main .entry-footer a:hover,
     .site-main .entry-footer a:focus {
         border-color: {$colors['cpd_article_foot_color']};
-     }
+    }
 
-     /* Advisory Notice */
-     .advisory-notice {
+    /* Advisory Notice */
+    .advisory-notice {
         background-color: {$colors['cpd_advisory_bg_color']};
-     }
+    }
 
-     .advisory-notice p {
+    .advisory-notice p {
         color: {$colors['cpd_advisory_color']};
-     }
+    }
 
-     /* Footer */
-     footer[role="contentinfo"] {
+    /* Footer */
+    footer[role="contentinfo"] {
         background-color: {$colors['cpd_footer_bg_color']};
-     }
+    }
 
-     .bottom-wrapper {
+    .bottom-wrapper {
         background-color: {$colors['cpd_footer_bottom_bg_color']};
-     }
+    }
 
-     .bottom p,
-     .bottom a {
+    .bottom p,
+    .bottom a {
         color: {$colors['cpd_footer_color']};
-     }
+    }
 
-     .footer-menu a:hover,
-     .footer-menu a:focus {
-        border-bottom: 1px solid {$colors['cpd_footer_color']};
+    .bottom a {
+        border-color: {$colors['cpd_footer_bottom_bg_color']};;
+    }
+
+    .bottom a:hover,
+    .bottom a:focus {
+        border-color: {$colors['cpd_footer_color']};
         color: {$colors['cpd_footer_color']};
-     }
+    }
 
-     /* Tables */
+    /* PPD Archive */
 
-     .ppd-archive th {
+    .ppd-archive th {
         background-color: {$colors['cpd_table_head_bg_color']};
         color: {$colors['cpd_table_head_color']};
-     }
+    }
 
-     .ppd-archive .odd {
+    .ppd-archive .odd {
         background-color: {$colors['cpd_table_row_bg_color']};
-     }
+    }
 
-     .ppd-archive .even {
+    .ppd-archive .even {
         background-color: {$colors['cpd_table_row_alt_bg_color']};
-     }
+    }
 
-     .ppd-archive .odd,
-     .ppd-archive .even {
+    .ppd-archive .odd,
+    .ppd-archive .even {
         color: {$colors['cpd_table_row_color']};
-     }
+    }
 
     .ppd-archive .odd a,
     .ppd-archive .even a {
@@ -1138,6 +1167,21 @@ function cpd_get_css($colors, $fonts)
     .ppd-archive a {
         border-color: {$colors['cpd_table_row_link_color']};
         color: {$colors['cpd_table_row_link_color']};
+    }
+
+    /* PPD Single */
+
+    .type-ppd .panel {
+        background-color: {$colors['cpd_article_foot_bg_color']};
+        color: {$colors['cpd_article_foot_color']};
+    }
+
+    .type-ppd .panel h2 {
+        color: {$colors['cpd_article_foot_color']};
+    }
+
+    .type-ppd .panel h2 {
+        font-family: {$fonts['body']};
     }
 
 CSS;
