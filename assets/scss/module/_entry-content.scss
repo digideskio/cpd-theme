@@ -12,11 +12,15 @@
     }
 }
 
-.hentry {
+.hentry,
+.comments-area,
+.post-navigation {
     @media (min-width: $tablet) {
         margin-left: 0;
     }
+}
 
+.hentry {
     h1,
     h2,
     h3,
@@ -39,9 +43,7 @@
     }
 }
 
-.entry-header,
-.entry-content,
-.entry-footer {
-    // padding-left: 5%;
-    // padding-right: 5%;
+#insert-media-button {
+    border-color: #ccc;
+    color: #555;
 }

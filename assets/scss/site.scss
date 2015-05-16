@@ -17,6 +17,7 @@ Text Domain: cpd
 @import "helper/variables";
 
 // Base
+@import "base/elements";
 @import "base/typography";
 
 // Layout
@@ -29,7 +30,8 @@ Text Domain: cpd
 @import "module/advisory";
 @import "module/entry-content";
 @import "module/intro";
-@import "module/tables";
+@import "module/ppd-single";
+@import "module/ppd-archive";
 @import "module/widgets";
 
 // Print

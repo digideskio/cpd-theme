@@ -1,6 +1,6 @@
 footer[role="contentinfo"] {
     margin-top: 80px;
-    padding: 50px 10% 50px;
+    padding: 50px 10%;
     position: relative;
     width: 100%;
 }
@@ -62,7 +62,14 @@ footer[role="contentinfo"],
     }
 
     a {
+        border-bottom-width: 1px;
+        border-style: solid;
         display: inline-block;
+
+        &:hover,
+        &:focus {
+            opacity: 0.6;
+        }
     }
 }
 
@@ -77,12 +84,5 @@ footer[role="contentinfo"],
     li {
         display: inline-block;
         margin-right: 15px;
-    }
-
-    a {
-        &:hover,
-        &:focus {
-            opacity: 0.6;
-        }
     }
 }

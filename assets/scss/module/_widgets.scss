@@ -18,6 +18,15 @@
         padding: 0;
         position: relative;
         transition: background-color ease-in-out .3s;
+    }
+
+    a {
+        display: block;
+        font-family: $noto-sans;
+        font-size: 14px;
+        line-height: 1.6;
+        padding: 12px 35px 12px 10px;
+        transition: color ease-in-out .3s;
 
         &:after {
             content: '\f429';
@@ -28,15 +37,6 @@
             right: 5px;
             top: 3px;
         }
-    }
-
-    a {
-        display: block;
-        font-family: $noto-sans;
-        font-size: 14px;
-        line-height: 1.6;
-        padding: 12px 35px 12px 10px;
-        transition: color ease-in-out .3s;
     }
 
     a:hover,
@@ -57,7 +57,22 @@
         border: 0;
         font-size: 14px;
         font-family: $noto-sans;
-        padding: 12px 10px;
+        padding: 12px 35px 12px 10px;
+        position: relative;
+    }
+
+    .search-form {
+        position: relative;
+
+        &:after {
+            content: '\f400';
+            font-family: "Genericons";
+            font-size: 24px;
+            opacity: .6;
+            position: absolute;
+            right: 7px;
+            top: 5px;
+        }
     }
 
     .textwidget {
