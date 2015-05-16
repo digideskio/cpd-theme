@@ -629,7 +629,7 @@ function cpd_color_schemes($schemes)
         unset($schemes[$key]);
     }
 
-    // White
+    // Grey
     $schemes['default'] = array(
         'label'  => __('Sheffield - Grey', 'cpd'),
         'colors' => array(
@@ -663,7 +663,7 @@ function cpd_color_schemes($schemes)
             '#ffffff', // 27
             '#ffffff'  // 28
         ),
-      );
+    );
 
     // Blue
     $schemes['cpd_sheff_blue'] = array(
@@ -699,7 +699,7 @@ function cpd_color_schemes($schemes)
             '#030000', // 27
             '#0066b3'  // 28
         ),
-      );
+    );
 
     return $schemes;
 }
@@ -752,7 +752,7 @@ function cpd_enqueue_css()
     $font_data = cpd_get_fonts();
 
     // Enqueue the additional fonts
-    wp_enqueue_style( 'cpd-customizer-fonts', $font_data['url'], array(), null );
+    wp_enqueue_style('cpd-customizer-fonts', $font_data['url'], array(), null);
 
     // Fetch our CSS output
     $css_output = cpd_get_css($colors, $font_data['stacks']);
@@ -810,7 +810,7 @@ function cpd_get_fonts()
         // Now we can pass these for output
         $fonts_stacks[$type]    = $chosen;
 
-        // Add prepare the strings for the Google Fonts URL
+        // Construct a Google Fonts URL
         $pos = strpos($chosen, 'Noto');
         if ($pos === false) {
             preg_match($pattern, $chosen, $matches);
