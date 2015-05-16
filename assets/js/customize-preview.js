@@ -1,6 +1,5 @@
 /**
  * Live-update changed settings in real time in the Customizer preview.
- * WORKING AS EXPECTED
  */
 
 ( function( $ ) {
@@ -11,6 +10,20 @@
 		$style = $( 'head' ).append( '<style type="text/css" id="cpd-color-scheme-css" />' )
 		                    .find( '#cpd-color-scheme-css' );
 	}
+
+	// Blog Title
+	api( 'blogname', function( value ) {
+		value.bind( function( to ) {
+			$( '.site-title' ).text( to );
+		} );
+	} );
+
+	// Blog Description
+	api( 'blogdescription', function( value ) {
+		value.bind( function( to ) {
+			$( '.site-description' ).text( to );
+		} );
+	} );
 
 	// Advisory Notice
 	api( 'cpd_advisory_notice', function( value ) {

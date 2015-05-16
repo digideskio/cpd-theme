@@ -4,187 +4,61 @@
  * Also trigger an update of the Color Scheme CSS when a color is changed.
  */
 
+// Add new options along with the corresponding colour scheme number
+var colorOptions = {
+	'cpd_widget_link_bg_color'		: 6,
+	'cpd_widget_link_bg_color_alt'	: 7,
+	'cpd_widget_link_color'			: 8,
+	'cpd_widget_link_color_alt'		: 9,
+	'cpd_widget_heading_bg_color'	: 10,
+	'cpd_widget_heading_color'		: 11,
+	'cpd_main_bg_color'				: 12,
+	'cpd_article_bg_color'			: 13,
+	'cpd_article_color'				: 14,
+	'cpd_article_foot_bg_color'		: 15,
+	'cpd_article_foot_color'		: 16,
+	'cpd_sidebar_bg_color'			: 17,
+	'cpd_intro_color'				: 18,
+	'cpd_advisory_bg_color'			: 19,
+	'cpd_advisory_color'			: 20,
+	'cpd_footer_bg_color'			: 21,
+	'cpd_footer_bottom_bg_color'	: 22,
+	'cpd_footer_color'				: 23,
+	'cpd_table_head_bg_color'		: 24,
+	'cpd_table_head_color'			: 25,
+	'cpd_table_row_bg_color'		: 26,
+	'cpd_table_row_color'			: 27,
+	'cpd_table_row_link_color'		: 28
+};
+
+// NOTHING SOUTH OF HERE NEEDS TOUCHING
 ( function( api ) {
 	// I've set colorSettings to be the same as colorSchemeKeys as there was no need for
 	// two completely identical arrays as per the Twenty Fifteen code!
 	var cssTemplate = wp.template( 'cpd-color-scheme' ),
-		colorSchemeKeys = [
-			'cpd_widget_link_bg_color',
-			'cpd_widget_link_bg_color_alt',
-			'cpd_widget_link_color',
-			'cpd_widget_link_color_alt',
-			'cpd_widget_heading_bg_color',
-			'cpd_widget_heading_color',
-			'cpd_main_bg_color',
-			'cpd_article_bg_color',
-			'cpd_article_color',
-			'cpd_article_foot_bg_color',
-			'cpd_article_foot_color',
-			'cpd_sidebar_bg_color',
-			'cpd_intro_color',
-			'cpd_advisory_bg_color',
-			'cpd_advisory_color',
-			'cpd_footer_bg_color',
-			'cpd_footer_bottom_bg_color',
-			'cpd_footer_color',
-			'cpd_table_head_bg_color',
-			'cpd_table_head_color',
-			'cpd_table_row_bg_color',
-			'cpd_table_row_color',
-			'cpd_table_row_link_color'
-		],
-		colorSettings = colorSchemeKeys;
+		colorSchemeKeys = _.keys(colorOptions),
+		colorSettings   = _.keys(colorOptions);
 
 	api.controlConstructor.select = api.Control.extend( {
 		ready: function() {
-			if ( 'color_scheme' === this.id ) {
-				this.setting.bind( 'change', function( value ) {
-					// THEN ADD A BLOCK FOR EVERY ADDITIONAL COLOR OPTION HERE
-					// THIS CAN BE MADE DRY-ER - REVISIT!
+			if ('color_scheme' === this.id) {
+				this.setting.bind( 'change', function(value) {
 
-					// Widget Link Background Color
-					api( 'cpd_widget_link_bg_color' ).set( colorSchemeCPD[value].colors[6] );
-					api.control( 'cpd_widget_link_bg_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[6] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[6] );
-
-					// Widget Link Hover/Focus/Active Background Color.
-					api( 'cpd_widget_link_bg_color_alt' ).set( colorSchemeCPD[value].colors[7] );
-					api.control( 'cpd_widget_link_bg_color_alt' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[7] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[7] );
-
-					// Widget Link Foreground Color.
-					api( 'cpd_widget_link_color' ).set( colorSchemeCPD[value].colors[8] );
-					api.control( 'cpd_widget_link_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[8] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[8] );
-
-					// Widget Link Hover/Focus/Active Foreground Color.
-					api( 'cpd_widget_link_color_alt' ).set( colorSchemeCPD[value].colors[9] );
-					api.control( 'cpd_widget_link_color_alt' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[9] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[9] );
-
-					// Widget Link Hover/Focus/Active Foreground Color.
-					api( 'cpd_widget_heading_bg_color' ).set( colorSchemeCPD[value].colors[10] );
-					api.control( 'cpd_widget_heading_bg_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[10] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[10] );
-
-					// Widget Link Hover/Focus/Active Foreground Color.
-					api( 'cpd_widget_heading_color' ).set( colorSchemeCPD[value].colors[11] );
-					api.control( 'cpd_widget_heading_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[11] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[11] );
-
-					// Main Content Background Color.
-					api( 'cpd_main_bg_color' ).set( colorSchemeCPD[value].colors[12] );
-					api.control( 'cpd_main_bg_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[12] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[12] );
-
-					// Article Background Color.
-					api( 'cpd_article_bg_color' ).set( colorSchemeCPD[value].colors[13] );
-					api.control( 'cpd_article_bg_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[13] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[13] );
-
-					// Article Text Color.
-					api( 'cpd_article_color' ).set( colorSchemeCPD[value].colors[14] );
-					api.control( 'cpd_article_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[14] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[14] );
-
-					// Article Background Color.
-					api( 'cpd_article_foot_bg_color' ).set( colorSchemeCPD[value].colors[15] );
-					api.control( 'cpd_article_foot_bg_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[15] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[15] );
-
-					// Article Text Color.
-					api( 'cpd_article_foot_color' ).set( colorSchemeCPD[value].colors[16] );
-					api.control( 'cpd_article_foot_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[16] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[16] );
-
-					// Header & Sidebar Background Color.
-					api( 'cpd_sidebar_bg_color' ).set( colorSchemeCPD[value].colors[17] );
-					api.control( 'cpd_sidebar_bg_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[17] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[17] );
-
-					// Site Title & Tagline Text Color
-					api( 'cpd_intro_color' ).set( colorSchemeCPD[value].colors[18] );
-					api.control( 'cpd_intro_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[18] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[18] );
-
-					// Advisory Notice Background Color.
-					api( 'cpd_advisory_bg_color' ).set( colorSchemeCPD[value].colors[19] );
-					api.control( 'cpd_advisory_bg_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[19] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[19] );
-
-					// Advisory Notice Text Color.
-					api( 'cpd_advisory_color' ).set( colorSchemeCPD[value].colors[20] );
-					api.control( 'cpd_advisory_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[20] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[20] );
-
-					// Footer Background Color.
-					api( 'cpd_footer_bg_color' ).set( colorSchemeCPD[value].colors[21] );
-					api.control( 'cpd_footer_bg_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[21] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[21] );
-
-					// Footer Bottom Background Color.
-					api( 'cpd_footer_bottom_bg_color' ).set( colorSchemeCPD[value].colors[22] );
-					api.control( 'cpd_footer_bottom_bg_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[22] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[22] );
-
-					// Footer Text Color.
-					api( 'cpd_footer_color' ).set( colorSchemeCPD[value].colors[23] );
-					api.control( 'cpd_footer_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[23] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[23] );
-
-					// Table Head Background Colur
-					api( 'cpd_table_head_bg_color' ).set( colorSchemeCPD[value].colors[24] );
-					api.control( 'cpd_table_head_bg_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[24] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[24] );
-
-					// Table Head Text Colour.
-					api( 'cpd_table_head_color' ).set( colorSchemeCPD[value].colors[25] );
-					api.control( 'cpd_table_head_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[25] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[25] );
-
-					// Table Row Background Colur
-					api( 'cpd_table_row_bg_color' ).set( colorSchemeCPD[value].colors[26] );
-					api.control( 'cpd_table_row_bg_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[26] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[26] );
-
-					// Table Row Text Colour.
-					api( 'cpd_table_row_color' ).set( colorSchemeCPD[value].colors[27] );
-					api.control( 'cpd_table_row_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[27] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[27] );
-
-					// Table Row Link Colour.
-					api( 'cpd_table_row_link_color' ).set( colorSchemeCPD[value].colors[28] );
-					api.control( 'cpd_table_row_link_color' ).container.find( '.color-picker-hex' )
-						.data( 'data-default-color', colorSchemeCPD[value].colors[28] )
-						.wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[28] );
-				} );
+					// Loop through our colorOptions array to save on repetition
+					_.each(colorOptions, function(number, key) {
+						api(key).set(colorSchemeCPD[value].colors[number]);
+						// If the control is present, update it
+						if (api.control(key)) {
+							api.control(key).container.find('.color-picker-hex')
+							  .data( 'data-default-color', colorSchemeCPD[value].colors[number] )
+							  .wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[number] );
+						}
+					});
+				});
 			}
 		}
-	} );
+	});
 
-	// NOTHING SOUTH OF HERE NEEDS TOUCHING
 	// Generate the CSS for the current Color Scheme.
 	function updateCSS() {
 		var scheme = api( 'color_scheme' )(), css,
