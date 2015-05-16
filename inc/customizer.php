@@ -617,36 +617,79 @@ add_action('customize_register', 'cpd_customize_advisory', 28);
 
 /**
  * Add/Remove Colour Schemes
+ * NOTE: We have to declare a new default because we've added lots of
+ * our own colour options.
  * ---------------------------------------
- * 6.  Widget Link Background Color
- * 7.  Widget Link Background Color Alt
- * 8.  Widget Link Color
- * 9.  Widget Link Color Alt
- * 10. Widget Heading Background Color
- * 11. Widget Heading Color
- * 12. Main Content Background Color
- * 13. Article Background Color
- * 14. Article Text Color
- * 15. Article Footer Background Color
- * 16. Article Footer Text Color
- * 17. Header & Sidebar Background Color
- * 18. Site Title & Tagline Color
- * 19. Advisory Notice Background Color
- * 20. Advisory Notice Text Color
- * 21. Footer Background Color
- * 22. Footer Bottom Background Color
- * 23. Footer Text Color
+ * 6.  Widget Link Background Colour
+ * 7.  Widget Link Background Colour Alt
+ * 8.  Widget Link Colour
+ * 9.  Widget Link Colour Alt
+ * 10. Widget Heading Background Colour
+ * 11. Widget Heading Colour
+ * 12. Main Content Background Colour
+ * 13. Article Background Colour
+ * 14. Article Text Colour
+ * 15. Article Footer Background Colour
+ * 16. Article Footer Text Colour
+ * 17. Header & Sidebar Background Colour
+ * 18. Site Title & Tagline Colour
+ * 19. Advisory Notice Background Colour
+ * 20. Advisory Notice Text Colour
+ * 21. Footer Background Colour
+ * 22. Footer Bottom Background Colour
+ * 23. Footer Text Colour
+ * 24. Table Head Background Colour
+ * 25. Table Head Text Colour
+ * 26. Table Row Background Colour
+ * 27. Table Row Text Colour
+ * 28. Table Row Link Colour
  * ---------------------------------------
  */
 function cpd_color_schemes($schemes)
 {
     // Remove the schemes that ship with Twenty Fifteen
     foreach ($schemes as $key => $scheme) {
-        unset($schemes[$key]);
+            unset($schemes[$key]);
     }
 
-    // Grey
+    // Default
     $schemes['default'] = array(
+        'label'  => __('Default', 'cpd'),
+        'colors' => array(
+            '#f1f1f1',
+            '#f1f1f1',
+            '#ffffff',
+            '#333333',
+            '#333333',
+            '#f7f7f7',
+            '#ffffff', // 6
+            '#f7f7f7', // 7
+            '#333333', // 8
+            '#333333', // 9
+            '#ffffff', // 10
+            '#333333', // 11
+            '#f1f1f1', // 12
+            '#ffffff', // 13
+            '#333333', // 14
+            '#f7f7f7', // 15
+            '#333333', // 16
+            '#ffffff', // 17
+            '#333333', // 18
+            '#008000', // 19
+            '#ffffff', // 20
+            '#f7f7f7', // 21
+            '#030000', // 22
+            '#ffffff', // 23
+            '#030000', // 24
+            '#ffffff', // 25
+            '#f7f7f7', // 26
+            '#333333', // 27
+            '#333333'  // 28
+        ),
+    );
+
+    // Grey
+    $schemes['cpd_sheff_grey'] = array(
         'label'  => __('Sheffield - Grey', 'cpd'),
         'colors' => array(
             '#f1f1f1',
@@ -727,11 +770,6 @@ add_filter('twentyfifteen_color_schemes', 'cpd_color_schemes');
 function cpd_enqueue_css()
 {
     $color_scheme_option = get_theme_mod('color_scheme', 'default');
-
-    // Don't do anything if the default color scheme is selected.
-    if ('default' === $color_scheme_option) {
-        return;
-    }
 
     // Set the current colors based on the saved options
     $colors = array(
@@ -854,6 +892,7 @@ function cpd_get_fonts()
  */
 function cpd_get_css($colors, $fonts)
 {
+
     $css = <<<CSS
     /* CPD Color Scheme */
 

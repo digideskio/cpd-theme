@@ -20,7 +20,8 @@ function cpd_setup()
 {
     // Add in our footer menu
     register_nav_menus( array(
-        'footer' => __( 'Footer Menu',      'cpd'),
+        'primary' => __( 'Primary Menu', 'cpd'),
+        'footer'  => __( 'Footer Menu', 'cpd'),
     ) );
 }
 add_action('after_setup_theme','cpd_setup');
