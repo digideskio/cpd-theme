@@ -53,6 +53,11 @@ function cpd_restrict_access($wp_customize)
         if (in_array($key, array_merge($user_allowed, $super_allowed))) {
             $wp_customize->get_section($key)->capability = 'supervise_users';
         }
+
+        // Let participants have access
+        if (in_array($key, $user_allowed)) {
+            $wp_customize->get_section($key)->capability = 'edit_posts';
+        }
     }
 
     // We don't want them to have access to the other title/tagline controls
