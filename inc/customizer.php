@@ -1180,10 +1180,6 @@ function cpd_get_css($colors, $fonts)
         color: {$colors['cpd_article_foot_color']};
     }
 
-    .type-ppd .panel h2 {
-        font-family: {$fonts['body']};
-    }
-
 CSS;
 
     return $css;
