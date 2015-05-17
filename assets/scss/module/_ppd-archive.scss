@@ -3,7 +3,7 @@
     padding: 0 8.3333%;
 
     @media (min-width: $tablet) {
-        padding: 0 8.3333% 0 0;
+        padding: 0 8.3333% 0 4.1666%;
     }
 }
 
@@ -36,10 +36,6 @@
         @media (min-width: $tablet) {
             width: 15%;
         }
-
-        li {
-            margin-bottom: 5px;
-        }
     }
 
     .categories {
@@ -51,6 +47,10 @@
     ul {
         list-style: none;
         margin: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
     }
 
     a {
@@ -86,7 +86,7 @@
         /* Behave  like a "row" */
         border: none;
         position: relative;
-        padding-left: 50%;
+        padding-left: 25%;
     }
 
     td:before {
@@ -98,34 +98,46 @@
         position: absolute;
         top: .75em;
         white-space: nowrap;
-        width: 45%;
+        width: 25%;
     }
 
     /*
     Label the data
     */
     td:nth-of-type(1):before {
-        content: "Date Completed";
+        content: "Date";
+        // content: "Date Completed";
+
     }
 
     td:nth-of-type(2):before {
-        content: "PPD Activity";
+        content: "Activity";
+        // content: "PPD Activity";
+
     }
 
     td:nth-of-type(3):before {
-        content: "Activity Description";
+        content: "Description";
+        // content: "Activity Description";
+
     }
 
     td:nth-of-type(4):before {
-        content: "Points Awarded";
+        content: "Points";
+        // content: "Points Awarded";
+
     }
 
     td:nth-of-type(5):before {
-        content: "Evidence Gathered";
+        content: "Evidence";
+        // content: "Evidence Gathered";
+
     }
 
     td:nth-of-type(6):before {
-        content: "Development Categories";
+        content: "Categories";
+        // content: "Development Categories";
+
     }
 }
 
