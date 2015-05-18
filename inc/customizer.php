@@ -802,6 +802,10 @@ function cpd_enqueue_css()
     $color_row_alt_color_rgb              = twentyfifteen_hex2rgb($colors['cpd_table_row_bg_color']);
     $colors['cpd_table_row_alt_bg_color'] = vsprintf('rgba( %1$s, %2$s, %3$s, 0.85)', $color_row_alt_color_rgb);
 
+    // Child link background colour - RGBA version of the main row background colour
+    $color_child_link_bg_color_rgb            = twentyfifteen_hex2rgb($colors['cpd_widget_link_bg_color']);
+    $colors['cpd_widget_child_link_bg_color'] = vsprintf('rgba( %1$s, %2$s, %3$s, 0.6)', $color_child_link_bg_color_rgb);
+
     // Get our font stacks and Google Fonts URL
     $font_data = cpd_get_fonts();
 
@@ -924,6 +928,7 @@ function cpd_get_css($colors, $fonts)
     }
 
     /* Widget Links & Text Widgets */
+    .main-navigation li,
     .widget li,
     .textwidget,
     .tagcloud {
@@ -931,23 +936,69 @@ function cpd_get_css($colors, $fonts)
         color: {$colors['cpd_widget_link_color']};
     }
 
+    .main-navigation li a,
     .widget li a {
         color: {$colors['cpd_widget_link_color']};
     }
 
+    .main-navigation li:hover,
+    .main-navigation li:hover a,
+    .main-navigation li:focus,
+    .main-navigation li:focus a,
+    .main-navigation li a:hover,
+    .main-navigation li a:focus,
+    .main-navigation li.current_page_item,
+    .main-navigation li.current_page_item a,
+    .main-navigation li.current_page_parent,
+    .main-navigation li.current_page_parent a,
+    .main-navigation li.current_page_ancestor,
+    .main-navigation li.current_page_ancestor a,
     .widget li:hover,
-    .widget li:focus,
-    .widget li.current_page_item,
     .widget li:hover a,
+    .widget li:focus,
     .widget li:focus a,
-    .widget li.current_page_item a {
+    .widget li a:hover,
+    .widget li a:focus,
+    .widget li.current_page_item,
+    .widget li.current_page_item a,
+    .widget li.current_page_parent,
+    .widget li.current_page_parent a,
+    .widget li.current_page_ancestor,
+    .widget li.current_page_ancestor a {
         background-color: {$colors['cpd_widget_link_bg_color_alt']};
         color: {$colors['cpd_widget_link_color_alt']};
     }
 
-    .widget li a:hover,
-    .widget li a:focus,
-    .widget li.current_page_item a {
+    .main-navigation .sub-menu,
+    .widget .children {
+        background-color: {$colors['cpd_widget_link_bg_color']};
+    }
+
+    .main-navigation .sub-menu li,
+    .main-navigation .sub-menu li a,
+    .widget .children li,
+    .widget .children li a {
+        background-color: {$colors['cpd_widget_child_link_bg_color']};
+        color: {$colors['cpd_widget_link_color']};
+    }
+
+    .main-navigation .sub-menu li:hover,
+    .main-navigation .sub-menu li:hover a,
+    .main-navigation .sub-menu li:focus,
+    .main-navigation .sub-menu li:focus a,
+    .main-navigation .sub-menu li a:hover,
+    .main-navigation .sub-menu li a:focus,
+    .main-navigation .sub-menu li.current_page_item,
+    .main-navigation .sub-menu li.current_page_item a,
+    .widget .children li:hover,
+    .widget .children li:hover a,
+    .widget .children li:focus,
+    .widget .children li:focus a,
+    .widget .children li a:hover,
+    .widget .children li a:focus,
+    .widget .children li.current_page_item,
+    .widget .children li.current_page_item a {
+        background-color: {$colors['cpd_widget_link_bg_color_alt']};
         color: {$colors['cpd_widget_link_color_alt']};
     }
 
@@ -1230,30 +1281,31 @@ CSS;
 function cpd_css_template()
 {
     $colors = array(
-        'cpd_widget_link_bg_color'     => '{{ data.cpd_widget_link_bg_color }}',
-        'cpd_widget_link_bg_color_alt' => '{{ data.cpd_widget_link_bg_color_alt }}',
-        'cpd_widget_link_color'        => '{{ data.cpd_widget_link_color }}',
-        'cpd_widget_link_color_alt'    => '{{ data.cpd_widget_link_color_alt }}',
-        'cpd_widget_heading_bg_color'  => '{{ data.cpd_widget_heading_bg_color }}',
-        'cpd_widget_heading_color'     => '{{ data.cpd_widget_heading_color }}',
-        'cpd_main_bg_color'            => '{{ data.cpd_main_bg_color }}',
-        'cpd_article_bg_color'         => '{{ data.cpd_article_bg_color }}',
-        'cpd_article_color'            => '{{ data.cpd_article_color }}',
-        'cpd_article_foot_bg_color'    => '{{ data.cpd_article_foot_bg_color }}',
-        'cpd_article_foot_color'       => '{{ data.cpd_article_foot_color }}',
-        'cpd_sidebar_bg_color'         => '{{ data.cpd_sidebar_bg_color }}',
-        'cpd_intro_color'              => '{{ data.cpd_intro_color }}',
-        'cpd_advisory_bg_color'        => '{{ data.cpd_advisory_bg_color }}',
-        'cpd_advisory_color'           => '{{ data.cpd_advisory_color }}',
-        'cpd_footer_bg_color'          => '{{ data.cpd_footer_bg_color }}',
-        'cpd_footer_bottom_bg_color'   => '{{ data.cpd_footer_bottom_bg_color }}',
-        'cpd_footer_color'             => '{{ data.cpd_footer_color }}',
-        'cpd_table_head_bg_color'      => '{{ data.cpd_table_head_bg_color }}',
-        'cpd_table_head_color'         => '{{ data.cpd_table_head_color }}',
-        'cpd_table_row_bg_color'       => '{{ data.cpd_table_row_bg_color }}',
-        'cpd_table_row_alt_bg_color'   => '{{ data.cpd_table_row_alt_bg_color }}',
-        'cpd_table_row_color'          => '{{ data.cpd_table_row_color }}',
-        'cpd_table_row_link_color'     => '{{ data.cpd_table_row_link_color }}',
+        'cpd_widget_link_bg_color'       => '{{ data.cpd_widget_link_bg_color }}',
+        'cpd_widget_link_bg_color_alt'   => '{{ data.cpd_widget_link_bg_color_alt }}',
+        'cpd_widget_link_color'          => '{{ data.cpd_widget_link_color }}',
+        'cpd_widget_link_color_alt'      => '{{ data.cpd_widget_link_color_alt }}',
+        'cpd_widget_child_link_bg_color' => '{{ data.cpd_widget_child_link_bg_color }}',
+        'cpd_widget_heading_bg_color'    => '{{ data.cpd_widget_heading_bg_color }}',
+        'cpd_widget_heading_color'       => '{{ data.cpd_widget_heading_color }}',
+        'cpd_main_bg_color'              => '{{ data.cpd_main_bg_color }}',
+        'cpd_article_bg_color'           => '{{ data.cpd_article_bg_color }}',
+        'cpd_article_color'              => '{{ data.cpd_article_color }}',
+        'cpd_article_foot_bg_color'      => '{{ data.cpd_article_foot_bg_color }}',
+        'cpd_article_foot_color'         => '{{ data.cpd_article_foot_color }}',
+        'cpd_sidebar_bg_color'           => '{{ data.cpd_sidebar_bg_color }}',
+        'cpd_intro_color'                => '{{ data.cpd_intro_color }}',
+        'cpd_advisory_bg_color'          => '{{ data.cpd_advisory_bg_color }}',
+        'cpd_advisory_color'             => '{{ data.cpd_advisory_color }}',
+        'cpd_footer_bg_color'            => '{{ data.cpd_footer_bg_color }}',
+        'cpd_footer_bottom_bg_color'     => '{{ data.cpd_footer_bottom_bg_color }}',
+        'cpd_footer_color'               => '{{ data.cpd_footer_color }}',
+        'cpd_table_head_bg_color'        => '{{ data.cpd_table_head_bg_color }}',
+        'cpd_table_head_color'           => '{{ data.cpd_table_head_color }}',
+        'cpd_table_row_bg_color'         => '{{ data.cpd_table_row_bg_color }}',
+        'cpd_table_row_alt_bg_color'     => '{{ data.cpd_table_row_alt_bg_color }}',
+        'cpd_table_row_color'            => '{{ data.cpd_table_row_color }}',
+        'cpd_table_row_link_color'       => '{{ data.cpd_table_row_link_color }}',
     );
     ?>
     <script type="text/html" id="tmpl-cpd-color-scheme">
