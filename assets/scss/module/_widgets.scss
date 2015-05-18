@@ -3,6 +3,7 @@
     padding: 12px 35px 12px 10px;
 }
 
+.main-navigation,
 .widget {
     margin: 0 0 25px;
 
@@ -18,6 +19,27 @@
         padding: 0;
         position: relative;
         transition: background-color ease-in-out .3s;
+
+        .children,
+        .sub-menu {
+            display: none;
+            border: 0;
+            margin: 0;
+            padding: 0;
+
+            li {
+                margin-left: 10px;
+            }
+        }
+
+        &.page_item_has_children.current_page_item,
+        &.current_page_parent,
+        &.current_page_ancestor {
+            .children,
+            .sub-menu {
+                display: block;
+            }
+        }
     }
 
     a {
@@ -41,12 +63,38 @@
 
     a:hover,
     a:focus,
-    li.current_page_item a {
+    li.current_page_item > a,
+    li.current_page_parent > a,
+    li.current_page_ancestor > a {
         &:after {
             opacity: 1;
         }
     }
 
+    .children,
+    .sub-menu {
+        li.current_page_item > a {
+            &:after {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.main-navigation {
+    padding: 0 20%;
+
+    .dropdown-toggle {
+        display: none;
+    }
+
+    .current-menu-ancestor > a,
+    .current-menu-item > a {
+        font-weight: 400;
+    }
+}
+
+.widget {
     .recentcomments {
         font-size: 14px;
         line-height: 1.6;
