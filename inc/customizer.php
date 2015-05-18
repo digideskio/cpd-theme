@@ -1170,6 +1170,11 @@ function cpd_get_css($colors, $fonts)
         border-color: {$colors['cpd_article_color']} !important;
     }
 
+    ins {
+        background-color: {$colors['cpd_article_foot_bg_color']};
+        color: {$colors['cpd_article_foot_color']};
+    }
+
     /* Article Entry Footer */
     .site-main .entry-footer {
         background-color: {$colors['cpd_article_foot_bg_color']};
