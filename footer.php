@@ -63,7 +63,11 @@
             </div>
 
             <div class="right">
-                <p>&copy; <?php echo date('Y'); ?> <?php echo bloginfo('name'); ?>. Powered by <a href="#" title="Aspire CPD">Aspire CPD</a>.</p>
+                <p>
+                    &copy; <?php echo date('Y'); ?> <?php echo bloginfo('name'); ?>.
+                    <br/>
+                    Powered by <a href="http://aspirecpd.org" title="Aspire CPD">Aspire CPD</a>.
+                </p>
             </div>
 
         </div>
