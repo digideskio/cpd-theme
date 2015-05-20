@@ -900,17 +900,17 @@ function cpd_get_css($colors, $fonts)
     $css = <<<CSS
     /* CPD Color Scheme */
 
-    /* Body Background Color (Main Content Area) */
+    /* Body Background Colour (Main Content Area) */
     html body {
         background-color: {$colors['cpd_main_bg_color']};
     }
 
-    /* Body Background Color (Sidebar) */
+    /* Body Background Colour (Sidebar) */
     html body:before {
         background-color: {$colors['cpd_sidebar_bg_color']};
     }
 
-    /* Fonts */
+    /* Body & Heading Fonts */
     body,
     .site-description {
         font-family: {$fonts['body']};
@@ -927,11 +927,27 @@ function cpd_get_css($colors, $fonts)
         color: {$colors['cpd_intro_color']};
     }
 
-    /* Widget Links & Text Widgets */
+    /* Widget Headings */
+    h2.widget-title,
+    #calendar_wrap caption {
+        background-color: {$colors['cpd_widget_heading_bg_color']};
+        color: {$colors['cpd_widget_heading_color']};
+    }
+
+    h2.widget-title + #calendar_wrap caption {
+        background-color: {$colors['cpd_widget_link_bg_color']};
+        color: {$colors['cpd_widget_link_color']};
+    }
+
+    h2.widget-title a,
+    h2.widget-title a:hover,
+    h2.widget-title a:focus {
+        color: {$colors['cpd_widget_heading_color']};
+    }
+
+    /* Widget Links */
     .main-navigation li,
-    .widget li,
-    .textwidget,
-    .tagcloud {
+    .widget li {
         background-color: {$colors['cpd_widget_link_bg_color']};
         color: {$colors['cpd_widget_link_color']};
     }
@@ -1002,14 +1018,15 @@ function cpd_get_css($colors, $fonts)
         color: {$colors['cpd_widget_link_color_alt']};
     }
 
-    .widget .recentcomments {
-        font-family: {$fonts['heading']};
+    /* Widgets */
+    .textwidget,
+    .tagcloud {
+        background-color: {$colors['cpd_widget_link_bg_color']};
+        color: {$colors['cpd_widget_link_color']};
     }
 
-    .widget .recentcomments,
-    .widget .recentcomments a,
-    .widget .recentcomments span {
-        transition: color ease-in-out .3s;
+    .widget .recentcomments {
+        font-family: {$fonts['body']};
     }
 
     .widget .recentcomments:hover a,
@@ -1025,13 +1042,16 @@ function cpd_get_css($colors, $fonts)
         color: {$colors['cpd_widget_link_color']};
     }
 
-    /* Widget Headings */
-    h2.widget-title {
-        background-color: {$colors['cpd_widget_heading_bg_color']};
-        color: {$colors['cpd_widget_heading_color']};
+    .widget .textwidget {
+        font-family: {$fonts['body']};
     }
 
-    /* Search Widget */
+    .widget .textwidget a,
+    .widget .textwidget a:hover,
+    .widget .textwidget a:focus {
+        color: {$colors['cpd_widget_link_color']};
+        border-color: {$colors['cpd_widget_link_color']};
+    }
 
     .widget .search-form {
         color: {$colors['cpd_widget_link_color']};
@@ -1040,6 +1060,7 @@ function cpd_get_css($colors, $fonts)
     .widget .search-field {
         background-color: {$colors['cpd_widget_link_bg_color']};
         color: {$colors['cpd_widget_link_color']};
+        font-family: {$fonts['body']};
     }
 
     .widget .search-field:focus {
@@ -1061,6 +1082,26 @@ function cpd_get_css($colors, $fonts)
 
     .widget .search-field::placeholder {
         color: {$colors['cpd_widget_link_color']};
+    }
+
+    #calendar_wrap {
+        background-color: {$colors['cpd_widget_link_bg_color']};
+        color: {$colors['cpd_widget_link_color']};
+        font-family: {$fonts['body']};
+    }
+
+    #calendar_wrap tbody a {
+        background-color: {$colors['cpd_widget_heading_bg_color']};
+        color: {$colors['cpd_widget_heading_color']};
+    }
+
+    #calendar_wrap #prev a,
+    #calendar_wrap #next a {
+        color: {$colors['cpd_widget_link_color']};
+    }
+
+    .widget_calendar caption {
+        font-family: {$fonts['body']};
     }
 
     /* Article Background */
