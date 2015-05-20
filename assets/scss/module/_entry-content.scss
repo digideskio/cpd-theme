@@ -14,7 +14,8 @@
 .hentry,
 .comments-area,
 .post-navigation,
-.page-header {
+.page-header,
+.navigation.pagination {
     @media (min-width: $tablet) {
         margin-left: 4.1666%;
     }
@@ -30,7 +31,7 @@
         a {
             &:hover,
             &:focus {
-                opacity: 0.6;
+                opacity: .6;
             }
         }
     }
@@ -38,12 +39,20 @@
     a {
         &:hover,
         &:focus {
-            opacity: 0.6;
+            opacity: .6;
         }
+    }
+
+    pre {
+        border: 0;
     }
 }
 
 #insert-media-button {
     border-color: #ccc;
     color: #555;
+}
+
+.pagination {
+    a {}
 }
