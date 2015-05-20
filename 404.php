@@ -10,17 +10,16 @@ get_header(); ?>
 
             <section class="hentry error-404 not-found">
                 <header class="entry-header">
-                    <h1 class="entry-title"><?php _e( 'Oops! That page can&rsquo;t be found.', 'twentyfifteen' ); ?></h1>
-                </header><!-- .page-header -->
+                    <h1 class="entry-title"><?php _e( 'Oops! That page can&rsquo;t be found.', 'cpd' ); ?></h1>
+                </header>
 
                 <div class="entry-content">
-                    <p><?php _e( 'It looks like nothing was found at this location. Maybe try a search?', 'twentyfifteen' ); ?></p>
-
+                    <p><?php _e( 'It looks like nothing was found at this location. Maybe try a search?', 'cpd' ); ?></p>
                     <?php get_search_form(); ?>
-                </div><!-- .page-content -->
-            </section><!-- .error-404 -->
+                </div>
+            </section>
 
-        </main><!-- .site-main -->
-    </div><!-- .content-area -->
+        </main>
+    </div>
 
 <?php get_footer(); ?>

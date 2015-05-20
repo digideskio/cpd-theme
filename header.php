@@ -7,21 +7,21 @@
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js">
 <head>
-    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width">
     <link rel="profile" href="http://gmpg.org/xfn/11">
-    <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
+    <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
     <!--[if lt IE 9]>
-    <script src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/html5.js"></script>
+        <script src="<?php echo esc_url(get_template_directory_uri()); ?>/js/html5.js"></script>
     <![endif]-->
     <?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>
 <div id="page" class="hfeed site">
-    <a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'twentyfifteen' ); ?></a>
+    <a class="skip-link screen-reader-text" href="#content"><?php _e('Skip to content', 'cpd'); ?></a>
 
-    <div id="" class="sidebar">
+    <div class="sidebar">
         <header id="masthead" class="site-header" role="banner">
             <div class="branding">
                 <?php
@@ -61,11 +61,11 @@
 
         <?php
             if ($tagpos === 'right') { ?>
-                    <div class="intro right">
-                        <h1 class="site-title"><?php echo $name ?></h1>
-                        <p class="site-description"><?php echo $tagtext; ?></h2>
-                    </div>
-                <?php
+                <div class="intro right">
+                    <h1 class="site-title"><?php echo $name ?></h1>
+                    <p class="site-description"><?php echo $tagtext; ?></h2>
+                </div>
+            <?php
             }
         ?>
 
@@ -81,5 +81,6 @@
                 <div class="advisory-notice">
                     <p><?php echo $notice; ?></p>
                 </div>
-            <?php }
+            <?php
+            }
         ?>

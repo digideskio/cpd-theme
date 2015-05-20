@@ -6,7 +6,7 @@
 require_once 'customizer-classes.php';
 
 /**
- * Remove/Edit customizer options added by Twenty Fifteen
+ * Remove/Edit customizer controls and sections added by Twenty Fifteen
  */
 function cpd_customize_cleanup($wp_customize)
 {
@@ -54,7 +54,7 @@ function cpd_restrict_access($wp_customize)
             $wp_customize->get_section($key)->capability = 'supervise_users';
         }
 
-        // Let participants have access
+        // And now let participants have access
         if (in_array($key, $user_allowed)) {
             $wp_customize->get_section($key)->capability = 'edit_posts';
         }
@@ -65,7 +65,7 @@ function cpd_restrict_access($wp_customize)
     $wp_customize->get_setting('cpd_tagline_pos')->capability = 'manage_network';
     $wp_customize->get_setting('cpd_intro_color')->capability = 'manage_network';
 }
-add_action('customize_register', 'cpd_restrict_access', 100);
+//add_action('customize_register', 'cpd_restrict_access', 100);
 
 /**
  * Customizer options - Branding
@@ -529,7 +529,7 @@ function cpd_customize_footer($wp_customize)
 
     $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'cpd_credit', array(
         'label'       => __('Credit Logo', 'cpd'),
-        'description' => 'Set an image that will appear in the footer, acting as a credit. It is recommended that this image is a JPG rather than a PNG.',
+        'description' => 'Set an image that will appear in the footer, acting as a credit. It is recommended that this image is a PNG and contrasts the current footer background colour.',
         'section'     => 'cpd_footer',
         'settings'    => 'cpd_credit',
     )));
@@ -541,7 +541,7 @@ function cpd_customize_footer($wp_customize)
 
     $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'cpd_credit_url', array(
         'label'    => __('Credit Link URL', 'cpd'),
-        'description' => 'Enter a valid URL which.',
+        'description' => 'Enter a valid URL that visitors will be taken to upon clicking the credit logo image.',
         'section'  => 'cpd_footer',
         'settings' => 'cpd_credit_url',
         'type'     => 'text'
@@ -618,7 +618,8 @@ add_action('customize_register', 'cpd_customize_advisory', 28);
 /**
  * Add/Remove Colour Schemes
  * NOTE: We have to declare a new default because we've added lots of
- * our own colour options.
+ * our own colour options. Numbers 1-6 are the built in colours courtesy
+ * of Twenty Fifteen that we're not using.
  * ---------------------------------------
  * 6.  Widget Link Background Colour
  * 7.  Widget Link Background Colour Alt
@@ -652,6 +653,7 @@ function cpd_color_schemes($schemes)
             unset($schemes[$key]);
     }
 
+    // Now add our our colour schemes
     // Default
     $schemes['default'] = array(
         'label'  => __('Default', 'cpd'),
@@ -866,10 +868,11 @@ function cpd_get_fonts()
         }
 
         // Now we can pass these for output
-        $fonts_stacks[$type]    = $chosen;
+        $fonts_stacks[$type] = $chosen;
 
         // Construct a Google Fonts URL
         $pos = strpos($chosen, 'Noto');
+
         if ($pos === false) {
             preg_match($pattern, $chosen, $matches);
             $fonts_enqueue[] = $matches[1] . ":400italic,700italic,400,700";
@@ -879,7 +882,7 @@ function cpd_get_fonts()
     // Construct our Google Fonts URL
     if ($fonts_enqueue) {
         $fonts_url = add_query_arg(array(
-            'family' => urlencode(implode( '|', array_unique($fonts_enqueue))),
+            'family' => urlencode(implode('|', array_unique($fonts_enqueue))),
         ), '//fonts.googleapis.com/css' );
     }
 
@@ -896,7 +899,6 @@ function cpd_get_fonts()
  */
 function cpd_get_css($colors, $fonts)
 {
-
     $css = <<<CSS
     /* CPD Color Scheme */
 
@@ -922,8 +924,8 @@ function cpd_get_css($colors, $fonts)
     }
 
     /* Site Title & Tagline Color */
-    .intro .site-title,
-    .intro .site-description {
+    .intro .site-description,
+    .intro .site-title {
         color: {$colors['cpd_intro_color']};
     }
 
@@ -1019,12 +1021,6 @@ function cpd_get_css($colors, $fonts)
     }
 
     /* Widgets */
-    .textwidget,
-    .tagcloud {
-        background-color: {$colors['cpd_widget_link_bg_color']};
-        color: {$colors['cpd_widget_link_color']};
-    }
-
     .widget .recentcomments {
         font-family: {$fonts['body']};
     }
@@ -1034,6 +1030,12 @@ function cpd_get_css($colors, $fonts)
     .widget .recentcomments:focus a,
     .widget .recentcomments:focus span {
         color: {$colors['cpd_widget_link_color_alt']};
+    }
+
+    .widget .tagcloud,
+    .widget .textwidget {
+        background-color: {$colors['cpd_widget_link_bg_color']};
+        color: {$colors['cpd_widget_link_color']};
     }
 
     .widget .tagcloud a,
@@ -1095,8 +1097,8 @@ function cpd_get_css($colors, $fonts)
         color: {$colors['cpd_widget_heading_color']};
     }
 
-    #calendar_wrap #prev a,
-    #calendar_wrap #next a {
+    #calendar_wrap #next a,
+    #calendar_wrap #prev a {
         color: {$colors['cpd_widget_link_color']};
     }
 
@@ -1105,18 +1107,18 @@ function cpd_get_css($colors, $fonts)
     }
 
     /* Article */
-
-    .site-main .post-navigation,
-    .site-main .pagination,
-    .site-main .site-footer,
-    .site-main .hentry,
-    .site-main .page-header,
-    .site-main .page-content,
     .site-main .comments-area,
+    .site-main .hentry,
+    .site-main .page-content,
+    .site-main .page-header,
+    .site-main .pagination,
+    .site-main .post-navigation,
+    .site-main .site-footer,
     .site-main .widecolumn {
         background-color: {$colors['cpd_article_bg_color']};
     }
 
+    .site-main .comment-content,
     .site-main .entry-content,
     .site-main h1,
     .site-main h1 a,
@@ -1129,18 +1131,17 @@ function cpd_get_css($colors, $fonts)
     .site-main h5,
     .site-main h5 a,
     .site-main h6,
-    .site-main h6 a,
-    .site-main .comment-content {
+    .site-main h6 a {
         color: {$colors['cpd_article_color']};
     }
 
     .site-main blockquote,
+    .site-main .comment-content a,
+    .site-main .comment-meta a,
+    .site-main .comment-respond a,
     .site-main .entry-content a,
     .site-main .entry-summary a,
     .site-main .page-content a,
-    .site-main .comment-meta a,
-    .site-main .comment-content a,
-    .site-main .comment-respond a,
     .site-main .pingback .comment-body > a {
         border-color: {$colors['cpd_article_color']};
         color: {$colors['cpd_article_color']};
@@ -1253,7 +1254,6 @@ function cpd_get_css($colors, $fonts)
     }
 
     /* Pagination */
-
     .site-main .page-numbers {
         color: {$colors['cpd_article_color']};
     }
@@ -1278,10 +1278,6 @@ function cpd_get_css($colors, $fonts)
         background-color: {$colors['cpd_footer_bg_color']};
     }
 
-    .bottom-wrapper {
-        background-color: {$colors['cpd_footer_bottom_bg_color']};
-    }
-
     .bottom p,
     .bottom a {
         color: {$colors['cpd_footer_color']};
@@ -1297,37 +1293,40 @@ function cpd_get_css($colors, $fonts)
         color: {$colors['cpd_footer_color']};
     }
 
-    /* PPD Archive */
+    .bottom-wrapper {
+        background-color: {$colors['cpd_footer_bottom_bg_color']};
+    }
 
+    /* PPD Archive */
     .ppd-archive th {
         background-color: {$colors['cpd_table_head_bg_color']};
         color: {$colors['cpd_table_head_color']};
-    }
-
-    .ppd-archive .odd {
-        background-color: {$colors['cpd_table_row_bg_color']};
     }
 
     .ppd-archive .even {
         background-color: {$colors['cpd_table_row_alt_bg_color']};
     }
 
-    .ppd-archive .odd,
-    .ppd-archive .even {
+    .ppd-archive .odd {
+        background-color: {$colors['cpd_table_row_bg_color']};
+    }
+
+    .ppd-archive .even,
+    .ppd-archive .odd {
         color: {$colors['cpd_table_row_color']};
     }
 
-    .ppd-archive .odd a,
-    .ppd-archive .even a {
+    .ppd-archive .even a,
+    .ppd-archive .odd a {
         border-color: {$colors['cpd_table_row_link_color']};
     }
 
-    .ppd-archive .odd a,
-    .ppd-archive .odd a:hover,
-    .ppd-archive .odd a:focus,
     .ppd-archive .even a,
     .ppd-archive .even a:hover,
-    .ppd-archive .even a:focus {
+    .ppd-archive .even a:focus,
+    .ppd-archive .odd a,
+    .ppd-archive .odd a:hover,
+    .ppd-archive .odd a:focus {
         color: {$colors['cpd_table_row_link_color']};
     }
 
@@ -1337,7 +1336,6 @@ function cpd_get_css($colors, $fonts)
     }
 
     /* PPD Single */
-
     .type-ppd .panel {
         background-color: {$colors['cpd_article_foot_bg_color']};
         color: {$colors['cpd_article_foot_color']};

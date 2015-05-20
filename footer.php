@@ -29,7 +29,7 @@
             <?php
             $credit = get_theme_mod('cpd_credit');
             if ($credit) {
-                $url    = get_theme_mod('cpd_credit_url');
+                $url = get_theme_mod('cpd_credit_url');
                 ?>
                 <div class="right">
                     <?php if ($url) { ?>
@@ -50,8 +50,8 @@
         <div class="bottom">
 
             <div class="left">
+                <a href="<?php echo network_site_url(); ?>">Back to Main Blog</a>
                 <ul class="footer-menu">
-                    <li><a href="<?php echo network_site_url(); ?>">Back to Main Blog</a></li>
                     <?php
                     $args = array(
                         'theme_location' => 'footer',
@@ -64,13 +64,14 @@
 
             <div class="right">
                 <p>
-                    &copy; <?php echo date('Y'); ?> <?php echo bloginfo('name'); ?>.
-                    <br/>
                     Powered by <a href="http://aspirecpd.org" title="Aspire CPD">Aspire CPD</a>.
+                    <br/>
+                    &copy; <?php echo date('Y'); ?> <?php echo bloginfo('name'); ?>.
                 </p>
             </div>
 
         </div>
+
     </div>
 
 <?php wp_footer(); ?>

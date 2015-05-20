@@ -1,7 +1,8 @@
 <?php
 /**
- * The template for displaying the PPD single pages
  * Template Name: PPD Single
+ *
+ * The template for displaying the PPD single pages
  */
 
 get_header(); ?>
@@ -84,7 +85,7 @@ get_header(); ?>
                                             }
 
                                             ?>
-    										<li><a class="link upload" href="<?php echo $link;?>" target="_blank"><span class="genericon genericon-download"></span> <?php echo $title;?></a></li>
+    										  <li><a class="link upload" href="<?php echo $link;?>" target="_blank"><span class="genericon genericon-download"></span> <?php echo $title;?></a></li>
     										<?php
 
                                         } elseif ($evidence['_cpd_evidence_type'] == 'journal') {
@@ -95,7 +96,7 @@ get_header(); ?>
                                             $date    = $journal->post_date;
 
                                             ?>
-    										<li><a class="link journal" href="<?php echo $link;?>"><span class="genericon genericon-book"></span> <?php echo $title;?></a></li>
+    										  <li><a class="link journal" href="<?php echo $link;?>"><span class="genericon genericon-book"></span> <?php echo $title;?></a></li>
     										<?php
                                         } elseif ($evidence['_cpd_evidence_type'] == 'url') {
                                             $link  = $evidence['_cpd_evidence_url'];
@@ -106,7 +107,7 @@ get_header(); ?>
                                             }
 
                                             ?>
-    										<li><a class="link url" href="<?php echo $link;?>" target="_blank"><span class="genericon genericon-website"></span> <?php echo $title;?></a></li>
+    										  <li><a class="link url" href="<?php echo $link;?>" target="_blank"><span class="genericon genericon-website"></span> <?php echo $title;?></a></li>
     										<?php
                                         }
                                     }
@@ -137,17 +138,17 @@ get_header(); ?>
 
 						<?php
                             wp_link_pages( array(
-                                'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'twentyfifteen' ) . '</span>',
+                                'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'cpd' ) . '</span>',
                                 'after'       => '</div>',
                                 'link_before' => '<span>',
                                 'link_after'  => '</span>',
-                                'pagelink'    => '<span class="screen-reader-text">' . __( 'Page', 'twentyfifteen' ) . ' </span>%',
+                                'pagelink'    => '<span class="screen-reader-text">' . __( 'Page', 'cpd' ) . ' </span>%',
                                 'separator'   => '<span class="screen-reader-text">, </span>',
                             ) );
                         ?>
 					</div><!-- .entry-content -->
 
-					<?php edit_post_link( __( 'Edit', 'twentyfifteen' ), '<footer class="entry-footer"><span class="edit-link">', '</span></footer><!-- .entry-footer -->' ); ?>
+					<?php edit_post_link( __( 'Edit', 'cpd' ), '<footer class="entry-footer"><span class="edit-link">', '</span></footer><!-- .entry-footer -->' ); ?>
 
 				</article><!-- #post-## -->
 			<?php
@@ -161,7 +162,7 @@ get_header(); ?>
         endwhile;
         ?>
 
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+		</main>
+	</div>
 
 <?php get_footer(); ?>
