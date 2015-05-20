@@ -1104,7 +1104,8 @@ function cpd_get_css($colors, $fonts)
         font-family: {$fonts['body']};
     }
 
-    /* Article Background */
+    /* Article */
+
     .site-main .post-navigation,
     .site-main .pagination,
     .site-main .site-footer,
@@ -1116,7 +1117,6 @@ function cpd_get_css($colors, $fonts)
         background-color: {$colors['cpd_article_bg_color']};
     }
 
-    /* Article Text */
     .site-main .entry-content,
     .site-main h1,
     .site-main h1 a,
@@ -1146,72 +1146,91 @@ function cpd_get_css($colors, $fonts)
         color: {$colors['cpd_article_color']};
     }
 
-    blockquote,
-    .main-navigation .menu-item-description,
-    .post-navigation .meta-nav,
-    .post-navigation a,
-    .post-navigation a:hover .post-title,
-    .post-navigation a:focus .post-title,
-    .image-navigation, .image-navigation a,
-    .comment-navigation, .comment-navigation a,
-    .widget, .author-heading, .taxonomy-description,
-    .page-links > .page-links-title,
-    .entry-caption, .comment-author,
-    .comment-metadata, .comment-metadata a,
-    .pingback .edit-link,
-    .pingback .edit-link a,
-    .post-password-form label,
-    .comment-form label,
-    .comment-notes,
-    .comment-awaiting-moderation,
-    .logged-in-as,
-    .form-allowed-tags,
-    .no-comments,
-    .site-info,
-    .site-info a,
-    .wp-caption-text,
-    .gallery-caption,
-    .comment-list .reply a,
-    .widecolumn label,
-    .widecolumn .mu_register label {
+    .site-main blockquote,
+    .site-main blockquote cite,
+    .site-main .main-navigation .menu-item-description,
+    .site-main .post-navigation .meta-nav,
+    .site-main .post-navigation a,
+    .site-main .post-navigation a:hover .post-title,
+    .site-main .post-navigation a:focus .post-title,
+    .site-main .image-navigation,
+    .site-main .image-navigation a,
+    .site-main .comment-navigation,
+    .site-main .comment-navigation a,
+    .site-main .widget,
+    .site-main .author-heading,
+    .site-main .taxonomy-description,
+    .site-main .page-links > .page-links-title,
+    .site-main .entry-caption,
+    .site-main .comment-author,
+    .site-main .comment-metadata,
+    .site-main .comment-metadata a,
+    .site-main .pingback .edit-link,
+    .site-main .pingback .edit-link a,
+    .site-main .post-password-form label,
+    .site-main .comment-form label,
+    .site-main .comment-notes,
+    .site-main .comment-awaiting-moderation,
+    .site-main .logged-in-as,
+    .site-main .form-allowed-tags,
+    .site-main .no-comments,
+    .site-main .site-info,
+    .site-main .site-info a,
+    .site-main .wp-caption-text,
+    .site-main .gallery-caption,
+    .site-main .comment-list .reply a,
+    .site-main .widecolumn label,
+    .site-main .widecolumn .mu_register label {
         color: {$colors['cpd_article_color']} !important;
     }
 
-    pre,
-    abbr[title],
-    table,
-    th,
-    td,
-    input,
-    textarea,
-    .main-navigation ul,
-    .main-navigation li,
-    .post-navigation,
-    .post-navigation div + div,
-    .pagination,
-    .comment-navigation,
-    .widget li,
-    .widget_categories .children,
-    .widget_nav_menu .sub-menu,
-    .widget_pages .children,
-    .site-header,
-    .site-footer,
-    .hentry + .hentry,
-    .author-info,
-    .entry-content .page-links a,
-    .page-links > span,
-    .page-header,
-    .comments-area,
-    .comment-list + .comment-respond,
-    .comment-list article,
-    .comment-list .pingback,
-    .comment-list .trackback,
-    .comment-list .reply a,
-    .no-comments {
+    .site-main pre,
+    .site-main abbr[title],
+    .site-main table,
+    .site-main th,
+    .site-main td,
+    .site-main input,
+    .site-main textarea,
+    .site-main .main-navigation ul,
+    .site-main .main-navigation li,
+    .site-main .post-navigation,
+    .site-main .post-navigation div + div,
+    .site-main .pagination,
+    .site-main .comment-navigation,
+    .site-main .widget li,
+    .site-main .widget_categories .children,
+    .site-main .widget_nav_menu .sub-menu,
+    .site-main .widget_pages .children,
+    .site-main .site-header,
+    .site-main .site-footer,
+    .site-main .hentry + .hentry,
+    .site-main .author-info,
+    .site-main .entry-content .page-links a,
+    .site-main .page-links > span,
+    .site-main .page-header,
+    .site-main .comments-area,
+    .site-main .comment-list + .comment-respond,
+    .site-main .comment-list article,
+    .site-main .comment-list .pingback,
+    .site-main .comment-list .trackback,
+    .site-main .comment-list .reply a,
+    .site-main .no-comments {
         border-color: {$colors['cpd_article_color']} !important;
     }
 
-    ins {
+    .site-main ins {
+        background-color: {$colors['cpd_article_foot_bg_color']};
+        color: {$colors['cpd_article_foot_color']};
+    }
+
+    .site-main pre {
+        background-color: {$colors['cpd_article_foot_bg_color']};
+        color: {$colors['cpd_article_foot_color']};
+    }
+
+    .site-main input[type="button"],
+    .site-main input[type="reset"],
+    .site-main input[type="submit"] {
         background-color: {$colors['cpd_article_foot_bg_color']};
         color: {$colors['cpd_article_foot_color']};
     }
@@ -1231,6 +1250,18 @@ function cpd_get_css($colors, $fonts)
     .site-main .entry-footer a:hover,
     .site-main .entry-footer a:focus {
         border-color: {$colors['cpd_article_foot_color']};
+    }
+
+    /* Pagination */
+
+    .site-main .page-numbers {
+        color: {$colors['cpd_article_color']};
+    }
+
+    .site-main .page-numbers.prev,
+    .site-main .page-numbers.next {
+        background-color: {$colors['cpd_article_foot_bg_color']};
+        color: {$colors['cpd_article_foot_color']};
     }
 
     /* Advisory Notice */
