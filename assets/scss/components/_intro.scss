@@ -1,0 +1,31 @@
+.intro {
+  &.left {
+    margin: 0;
+    padding-top: 25px;
+  }
+
+  &.right {
+    margin: 0 8.3333%;
+
+    @media (min-width: $tablet) {
+      margin: 80px 8.3333% 0;
+    }
+  }
+}
+
+.site-description {
+  opacity: 1;
+
+  .intro.right & {
+    font-size: 24px;
+    line-height: 34px;
+    margin: 0 0 36px;
+  }
+}
+
+.site-title {
+  .intro.right & {
+    font-size: 34px;
+    line-height: 44px;
+  }
+}

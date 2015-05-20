@@ -1,0 +1,226 @@
+// Any questionable specitivity is for a reason :)
+.main-navigation,
+.widget {
+  margin: 0 0 25px;
+
+  h2.widget-title,
+  caption {
+    font-size: $text--small;
+    font-weight: 400;
+    letter-spacing: normal;
+    text-transform: none;
+
+    a {
+      display: inline-block;
+      line-height: inherit;
+      padding: 0;
+    }
+  }
+
+  li {
+    border: 0;
+    padding: 0;
+    position: relative;
+    transition: background-color ease-in-out .3s;
+
+    .children,
+    .sub-menu {
+      border: 0;
+      display: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .children li,
+    .sub-menu li {
+      margin-left: 10px;
+    }
+
+    &.page_item_has_children.current_page_item,
+    &.menu-item-has-children.current_page_item,
+    &.current_page_parent,
+    &.current_page_ancestor {
+      .children,
+      .sub-menu {
+        display: block;
+      }
+    }
+  }
+
+  a {
+    display: block;
+    font-family: $sans--noto;
+    font-weight: 400;
+    font-size: $text--small;
+    line-height: 1.6;
+    padding: 12px 40px 12px 10px;
+    transition: color ease-in-out .3s;
+
+    &:after {
+      content: '\f429';
+      font-family: "Genericons";
+      font-size: 24px;
+      opacity: .6;
+      position: absolute;
+      right: 5px;
+      top: 3px;
+    }
+  }
+
+  a:hover,
+  a:focus,
+  li.current_page_item > a,
+  li.current_page_parent > a,
+  li.current_page_ancestor > a {
+    &:after {
+      opacity: 1;
+    }
+  }
+
+  .children,
+  .sub-menu {
+    li.current_page_item > a {
+      &:after {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.main-navigation {
+  padding: 0 20%;
+
+  .dropdown-toggle {
+    display: none;
+  }
+
+  .nav-menu {
+    border: 0;
+  }
+
+  .current-menu-ancestor > a,
+  .current-menu-item > a {
+    font-weight: 400;
+  }
+}
+
+.widget {
+  .widget-title,
+  &.widget_calendar caption {
+    padding: 12px 35px 12px 10px;
+  }
+
+  .widget-title {
+    margin-bottom: 0;
+  }
+
+  &.widget_calendar caption {
+    margin-bottom: 10px;
+  }
+
+  &.widget_calendar,
+  &.widget_tag_cloud,
+  &.widget_text,
+  &.widget_recent_comments .comment-author-link {
+    a:after {
+      content: '';
+      display: none;
+    }
+  }
+
+  .recentcomments {
+    line-height: 1.6;
+    padding: 12px 35px 12px 10px !important;
+  }
+
+  .recentcomments,
+  .recentcomments a,
+  .recentcomments span {
+    font-size: $text--small;
+    transition: color ease-in-out .3s;
+  }
+
+  input.search-field {
+    border: 0;
+    font-size: $text--small;
+    padding: 12px 35px 12px 10px;
+    position: relative;
+  }
+
+  .search-form {
+    position: relative;
+
+    &:after {
+      content: '\f400';
+      font-family: "Genericons";
+      font-size: 24px;
+      opacity: .6;
+      position: absolute;
+      right: 7px;
+      top: 5px;
+    }
+  }
+
+  .textwidget {
+    font-size: $text--small;
+    padding: 12px 10px;
+
+    a {
+      border-bottom-width: 1px;
+      border-style: solid;
+      display: inline;
+      line-height: inherit;
+      padding: 0;
+
+      &:hover,
+      &:focus {
+        opacity: 1;
+      }
+    }
+  }
+
+  .tagcloud {
+    padding: 12px 35px 12px 10px;
+
+    a {
+      display: inline;
+      padding: 0;
+    }
+  }
+
+  &.widget_rss {
+    li {
+      margin-bottom: 0;
+    }
+
+    .rsswidget {
+      font-weight: 400;
+    }
+
+    .rssSummary,
+    .rss-date,
+    cite {
+      display: none;
+    }
+  }
+}
+
+#calendar_wrap {
+  a {
+    display: inline-block;
+    line-height: inherit;
+    padding: 0 .5em;
+  }
+
+  tfoot a {
+    padding: .5em;
+  }
+
+  #prev {
+    text-align: left;
+  }
+
+  #next {
+    text-align: right;
+  }
+}

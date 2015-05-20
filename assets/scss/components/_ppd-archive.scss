@@ -1,0 +1,133 @@
+.ppd-archive-container {
+  margin-top: 25px;
+  padding: 0 8.3333%;
+
+  @media (min-width: $tablet) {
+    padding: 0 8.3333% 0 4.1666%;
+  }
+}
+
+.ppd-archive {
+  .date {
+    @media (min-width: $tablet) {
+      width: 12.5%;
+    }
+  }
+
+  .activity {
+    @media (min-width: $tablet) {
+      width: 17.5%;
+    }
+  }
+
+  .description {
+    @media (min-width: $tablet) {
+      width: 30%;
+    }
+  }
+
+  .points {
+    @media (min-width: $tablet) {
+      width: 10%;
+    }
+  }
+
+  .evidence {
+    @media (min-width: $tablet) {
+      width: 15%;
+    }
+  }
+
+  .categories {
+    @media (min-width: $tablet) {
+      width: 15%;
+    }
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  a {
+    border-bottom-width: 1px;
+    border-style: dotted;
+
+    &:hover,
+    &:focus {
+      opacity: .6;
+    }
+  }
+
+  @media only screen and (max-width: 954px) {
+    // Force table to not be like tables anymore
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+    }
+    // Hide table headers (but not display: none;, for accessibility)
+
+    thead tr {
+      left: -9999px;
+      position: absolute;
+      top: -9999px;
+    }
+
+    td {
+      // Behave  like a "row"
+      border: 0;
+      padding-left: 25%;
+      position: relative;
+    }
+
+    td:before {
+      // Now like a table header - top/left values mimic padding
+      font-weight: 700;
+      left: .75em;
+      padding-right: .75em;
+      position: absolute;
+      top: .75em;
+      white-space: nowrap;
+      width: 25%;
+    }
+
+    // Label the data
+    td:nth-of-type(1):before {
+      content: 'Date';
+    }
+
+    td:nth-of-type(2):before {
+      content: 'Activity';
+    }
+
+    td:nth-of-type(3):before {
+      content: 'Description';
+    }
+
+    td:nth-of-type(4):before {
+      content: 'Points';
+    }
+
+    td:nth-of-type(5):before {
+      content: 'Evidence';
+    }
+
+    td:nth-of-type(6):before {
+      content: 'Categories';
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    td {
+      padding: 35px .75em 25px;
+    }
+  }
+}

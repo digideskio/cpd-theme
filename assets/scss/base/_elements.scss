@@ -1,15 +1,16 @@
 table,
+td,
 th,
-tr,
-td {
-    border: 0;
+tr {
+  border: 0;
 }
 
-th, td {
-    font-size: 14px;
-    padding: .75em;
+td,
+th {
+  font-size: $text--small;
+  padding: .75em;
 }
 
 th {
-    font-size: 13px;
+  font-size: $text--small - 1;
 }

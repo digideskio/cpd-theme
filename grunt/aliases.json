@@ -6,15 +6,8 @@
   "prefix": [
     "autoprefixer"
   ],
-  "sprite" : [
-    "spriteGenerator"
-  ],
-  "responsive" : [
-    "responsive_images"
-  ],
   "scripts": [
     "jshint",
-    "modernizr",
     "concat",
     "uglify",
     "clean"

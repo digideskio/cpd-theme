@@ -11,7 +11,7 @@ module.exports = {
     },
     scripts: {
       files: ['assets/js/**/*.js', '!js/modernizr-custom.js'],
-      tasks: ['newer:jshint:before', 'modernizr', 'newer:concat', 'newer:uglify', 'newer:jshint:after','clean', 'notify:scripts'],
+      tasks: ['newer:jshint:before', 'newer:concat', 'newer:uglify', 'newer:jshint:after','clean', 'notify:scripts'],
       options: {
         spawn: false,
       }

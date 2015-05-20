@@ -6,9 +6,8 @@ module.exports = function(grunt) {
         "sass",
         "autoprefixer",
         "cssmin",
-        // "sprite",
         "jshint:before",
-        "modernizr",
+        // "modernizr",
         "concat",
         "uglify",
         "jshint:after",
@@ -17,17 +16,4 @@ module.exports = function(grunt) {
         "clean",
         "notify:build"
     ]);
-
-    // With grunt-concurrent
-    // grunt.registerTask('default', [
-    //     "concurrent:phase1",
-    //     "concurrent:phase2",
-    //     "concurrent:phase3",
-    //     "concurrent:phase4",
-    //     "concurrent:phase5",
-    //     "concurrent:phase6",
-    //     "concurrent:phase7",
-    //     "clean",
-    //     "notify:build"
-    // ]);
 };

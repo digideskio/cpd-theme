@@ -4,7 +4,8 @@
  * Also trigger an update of the Color Scheme CSS when a color is changed.
  */
 
-// Add new options along with the corresponding colour scheme number
+// Add new options here along with the corresponding colour scheme number.
+// This makes this file much DRY-er!
 var colorOptions = {
 	'cpd_widget_link_bg_color'		: 6,
 	'cpd_widget_link_bg_color_alt'	: 7,
@@ -32,10 +33,10 @@ var colorOptions = {
 };
 
 // NOTHING SOUTH OF HERE NEEDS TOUCHING
-( function( api ) {
+(function(api) {
 	// I've set colorSettings to be the same as colorSchemeKeys as there was no need for
 	// two completely identical arrays as per the Twenty Fifteen code!
-	var cssTemplate = wp.template( 'cpd-color-scheme' ),
+	var cssTemplate = wp.template('cpd-color-scheme'),
 		colorSchemeKeys = _.keys(colorOptions),
 		colorSettings   = _.keys(colorOptions);
 
@@ -43,15 +44,16 @@ var colorOptions = {
 		ready: function() {
 			if ('color_scheme' === this.id) {
 				this.setting.bind( 'change', function(value) {
-
 					// Loop through our colorOptions array to save on repetition
 					_.each(colorOptions, function(number, key) {
+						// Update the DB with the new colour value
 						api(key).set(colorSchemeCPD[value].colors[number]);
-						// If the control is present, update it
+						// If the control is present, update it live in the customizer.
+						// Needs this conditional otherwise customizer breaks for supervisors and participants!
 						if (api.control(key)) {
 							api.control(key).container.find('.color-picker-hex')
-							  .data( 'data-default-color', colorSchemeCPD[value].colors[number] )
-							  .wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[number] );
+							  .data( 'data-default-color', colorSchemeCPD[value].colors[number])
+							  .wpColorPicker( 'defaultColor', colorSchemeCPD[value].colors[number]);
 						}
 					});
 				});
@@ -61,23 +63,23 @@ var colorOptions = {
 
 	// Generate the CSS for the current Color Scheme.
 	function updateCSS() {
-		var scheme = api( 'color_scheme' )(), css,
-			colors = _.object( colorSchemeKeys, colorSchemeCPD[ scheme ].colors );
+		var scheme = api('color_scheme')(), css,
+			colors = _.object(colorSchemeKeys, colorSchemeCPD[ scheme ].colors);
 
 		// Merge in color scheme overrides.
-		_.each( colorSettings, function( setting ) {
-			colors[ setting ] = api( setting )();
+		_.each(colorSettings, function(setting) {
+			colors[ setting ] = api(setting)();
 		});
 
-		css = cssTemplate( colors );
+		css = cssTemplate(colors);
 
-		api.previewer.send( 'update-color-scheme-css', css );
+		api.previewer.send('update-color-scheme-css', css);
 	}
 
 	// Update the CSS whenever a color setting is changed.
-	_.each( colorSettings, function( setting ) {
-		api( setting, function( setting ) {
-			setting.bind( updateCSS );
-		} );
-	} );
-} )( wp.customize );
+	_.each(colorSettings, function(setting) {
+		api(setting, function( setting) {
+			setting.bind(updateCSS);
+		});
+	});
+})(wp.customize);

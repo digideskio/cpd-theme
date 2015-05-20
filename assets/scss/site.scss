@@ -13,33 +13,44 @@ Template: twentyfifteen
 Text Domain: cpd
 */
 
-// Helper
-@import "helper/variables";
+// Config
+@import "config/variables";
+@import "config/functions";
+@import "config/mixins";
 
 // Base
 @import "base/elements";
 @import "base/typography";
 
 // Layout
-@import "layout/aside";
-@import "layout/footer";
 @import "layout/header";
+@import "layout/aside";
 @import "layout/main";
+@import "layout/footer";
 
-// Module
-@import "module/advisory";
-@import "module/entry-content";
-@import "module/intro";
-@import "module/ppd-single";
-@import "module/ppd-archive";
-@import "module/widgets";
+// Components
+@import "components/advisory";
+@import "components/entry-content";
+@import "components/intro";
+@import "components/ppd-single";
+@import "components/ppd-archive";
+@import "components/widgets";
 
-// Print
+// Page
+@import "page/home-page";
 
 // State
+@import "state/js";
 
 // Theme
-@import "theme/sheff";
+
+// Vendor
+
+// Shame
+@import "shame/shame";
+
+// Print
+@import "print/print";
 
 // Other
 @import "hacks";
