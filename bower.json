@@ -13,6 +13,6 @@
   ],
   "dependencies": {
     "modernizr": "latest",
-    "respondJS": "latest",
+    "respondJS": "latest"
   }
 }
