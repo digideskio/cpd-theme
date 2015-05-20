@@ -1,17 +1,20 @@
-.widget-title {
-    margin-bottom: 0;
-    padding: 12px 35px 12px 10px;
-}
-
+// Any questionable specitivity is for a reason :)
 .main-navigation,
 .widget {
     margin: 0 0 25px;
 
-    h2 {
+    h2.widget-title,
+    caption {
         font-size: 14px;
         font-weight: 400;
         letter-spacing: normal;
         text-transform: none;
+
+        a {
+            display: inline-block;
+            line-height: inherit;
+            padding: 0;
+        }
     }
 
     li {
@@ -33,6 +36,7 @@
         }
 
         &.page_item_has_children.current_page_item,
+        &.menu-item-has-children.current_page_item,
         &.current_page_parent,
         &.current_page_ancestor {
             .children,
@@ -45,9 +49,10 @@
     a {
         display: block;
         font-family: $noto-sans;
+        font-weight: 400;
         font-size: 14px;
         line-height: 1.6;
-        padding: 12px 35px 12px 10px;
+        padding: 12px 40px 12px 10px;
         transition: color ease-in-out .3s;
 
         &:after {
@@ -88,6 +93,10 @@
         display: none;
     }
 
+    .nav-menu {
+        border: 0;
+    }
+
     .current-menu-ancestor > a,
     .current-menu-item > a {
         font-weight: 400;
@@ -95,16 +104,44 @@
 }
 
 .widget {
+    .widget-title,
+    &.widget_calendar caption {
+        padding: 12px 35px 12px 10px;
+    }
+
+    .widget-title {
+        margin-bottom: 0;
+    }
+
+    &.widget_calendar caption {
+        margin-bottom: 10px;
+    }
+
+    &.widget_calendar,
+    &.widget_tag_cloud,
+    &.widget_text,
+    &.widget_recent_comments .comment-author-link {
+        a:after {
+            content: '';
+            display: none;
+        }
+    }
+
     .recentcomments {
-        font-size: 14px;
         line-height: 1.6;
         padding: 12px 35px 12px 10px !important;
+    }
+
+    .recentcomments,
+    .recentcomments a,
+    .recentcomments span {
+        font-size: 14px;
+        transition: color ease-in-out .3s;
     }
 
     input.search-field {
         border: 0;
         font-size: 14px;
-        font-family: $noto-sans;
         padding: 12px 35px 12px 10px;
         position: relative;
     }
@@ -124,8 +161,21 @@
     }
 
     .textwidget {
-        font-family: $noto-sans;
+        font-size: 14px;
         padding: 12px 10px;
+
+        a {
+            border-bottom-width: 1px;
+            border-style: solid;
+            display: inline;
+            line-height: inherit;
+            padding: 0;
+
+            &:hover,
+            &:focus {
+                opacity: 1;
+            }
+        }
     }
 
     .tagcloud {
@@ -135,5 +185,41 @@
             display: inline;
             padding: 0;
         }
+    }
+
+    &.widget_rss {
+        li {
+            margin-bottom: 0;
+        }
+
+        .rsswidget {
+            font-weight: 400;
+        }
+
+        .rssSummary,
+        .rss-date,
+        cite {
+            display: none;
+        }
+    }
+}
+
+#calendar_wrap {
+    a {
+        display: inline-block;
+        line-height: inherit;
+        padding: 0 .5em;
+    }
+
+    tfoot a {
+        padding: .5em;
+    }
+
+    #prev {
+        text-align: left;
+    }
+
+    #next {
+        text-align: right;
     }
 }
