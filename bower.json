@@ -9,23 +9,10 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "bower_components"
   ],
   "dependencies": {
     "modernizr": "latest",
-    "masonry": "latest",
-    "imagesloaded": "latest",
-    "bootstrap-sass-official": "latest",
-    "slick-carousel": "latest",
     "respondJS": "latest",
-    "normalize.css": "latest",
-    "html5-boilerplate": "latest",
-    "fontawesome": "latest",
-    "jquery-ui": "latest",
-    "jquery": "latest",
-    "jquery-legacy": "jquery#^1",
-    "jquery-modern": "jquery#^2"
   }
 }
