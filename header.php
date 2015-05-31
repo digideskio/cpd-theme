@@ -23,7 +23,7 @@
 
     <div class="sidebar">
         <header id="masthead" class="site-header" role="banner">
-            <div class="branding">
+            <div class="site-branding">
                 <?php
                     $logo    = get_theme_mod('cpd_logo');
                     $name    = get_bloginfo('name','display');
@@ -45,7 +45,7 @@
                             if ($tagtext) { ?>
                                 <div class="intro left">
                                     <h1 class="site-title"><?php echo $name ?></h1>
-                                    <p class="site-description"><?php echo $tagtext; ?></h2>
+                                    <p class="site-description"><?php echo $tagtext; ?></p>
                                 </div>
                             <?php
                             }
