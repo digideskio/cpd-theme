@@ -1,0 +1,21 @@
+#secondary {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  margin: 25px 0;
+  padding: 0 7.6923%;
+
+  @media (min-width: $tablet) {
+    background: inherit;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+#site-navigation {
+  padding: 0;
+
+  @media (min-width: $tablet) {
+    padding: 0 20%;
+  }
+}
