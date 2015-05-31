@@ -1297,30 +1297,43 @@ function cpd_get_css($colors, $fonts)
         background-color: {$colors['cpd_footer_bottom_bg_color']};
     }
 
-    /* PPD Archive */
+    /* Inline Tables / PPD Archive */
+    .entry-content table th,
     .ppd-archive th {
         background-color: {$colors['cpd_table_head_bg_color']};
         color: {$colors['cpd_table_head_color']};
     }
 
+    .entry-content table .even,
     .ppd-archive .even {
         background-color: {$colors['cpd_table_row_alt_bg_color']};
     }
 
+    .entry-content table .odd,
     .ppd-archive .odd {
         background-color: {$colors['cpd_table_row_bg_color']};
     }
 
+    .entry-content table .even,
+    .entry-content table .odd,
     .ppd-archive .even,
     .ppd-archive .odd {
         color: {$colors['cpd_table_row_color']};
     }
 
+    .entry-content table .even a,
+    .entry-content table .odd a,
     .ppd-archive .even a,
     .ppd-archive .odd a {
         border-color: {$colors['cpd_table_row_link_color']};
     }
 
+    .entry-content table .even a,
+    .entry-content table .even a:hover,
+    .entry-content table .even a:focus,
+    .entry-content table .odd a,
+    .entry-content table .odd a:hover,
+    .entry-content table .odd a:focus,
     .ppd-archive .even a,
     .ppd-archive .even a:hover,
     .ppd-archive .even a:focus,
@@ -1330,6 +1343,7 @@ function cpd_get_css($colors, $fonts)
         color: {$colors['cpd_table_row_link_color']};
     }
 
+    .entry-content table a,
     .ppd-archive a {
         border-color: {$colors['cpd_table_row_link_color']};
         color: {$colors['cpd_table_row_link_color']};
