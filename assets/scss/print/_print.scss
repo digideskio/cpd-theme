@@ -1,0 +1,123 @@
+@media print {
+  a:after {
+    content: " [" attr(href) " ] ";
+    display: block;
+    font-style: italic;
+    font-weight: normal;
+  }
+
+  .sidebar,
+  #colophon,
+  .bottom-wrapper {
+    display: none;
+  }
+
+  .site,
+  .hentry,
+  .page-header,
+  .ppd-archive-container {
+    margin: 0;
+    padding: 0;
+  }
+
+  .page-header {
+    margin-bottom: 20px;
+  }
+
+  .entry-content {
+    section {
+      display: inline-block;
+    }
+  }
+
+  .ppd-archive,
+  .entry-content table {
+    // Force table to not be like tables anymore
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+    }
+    // Hide table headers (but not display: none;, for accessibility)
+
+    thead tr {
+      left: -9999px;
+      position: absolute;
+      top: -9999px;
+    }
+
+    tr {
+      border-bottom: 2px solid black;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+    }
+
+    td {
+      // Behave  like a "row"
+      border: 0;
+      padding-left: 25%;
+      position: relative;
+      font-weight: bold;
+    }
+
+    td:before {
+      // Now like a table header - top/left values mimic padding
+      font-weight: 700;
+      left: .75em;
+      padding-right: .75em;
+      position: absolute;
+      top: .75em;
+      white-space: nowrap;
+      width: 25%;
+    }
+
+    // Label the data using the attribute we're adding via JS
+    td:before {
+      content: attr(data-th-value);
+      text-transform: uppercase;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    a {
+      border: none !important;
+    }
+  }
+
+  .type-ppd .desc,
+  .type-ppd .panel {
+    margin-bottom: 0;
+  }
+
+  .type-ppd .panel {
+    section + section {
+      display: block;
+    }
+  }
+
+  .type-ppd .panel h2,
+  .type-ppd .section-title {
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+
+  .type-ppd .panel,
+  .type-ppd .evidence,
+  .type-ppd .categories {
+    float: none;
+    width: 100%;
+  }
+
+  .type-ppd .category-list li a,
+  .type-ppd .evidence-list li a {
+    &:after {
+      margin-left: 40px;
+    }
+  }
+}
