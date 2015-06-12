@@ -1359,6 +1359,21 @@ function cpd_get_css($colors, $fonts)
         color: {$colors['cpd_article_foot_color']};
     }
 
+    /* PPD Single */
+    .type-assessment .panel {
+        background-color: {$colors['cpd_article_foot_bg_color']};
+        color: {$colors['cpd_article_foot_color']};
+    }
+
+    .type-assessment .panel h1,
+    .type-assessment .panel h2,
+    .type-assessment .panel h3,
+    .type-assessment .panel h4,
+    .type-assessment .panel h5,
+    .type-assessment .panel h6 {
+        color: {$colors['cpd_article_foot_color']};
+    }
+
 CSS;
 
     return $css;
