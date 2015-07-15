@@ -1,16 +1,11 @@
 .type-ppd {
   .panel {
     margin-bottom: 58px;
-
-    @media (max-width: 954px) {
-      background-color: inherit;
-      color: inherit;
-    }
+    padding: 1em 1.5em;
 
     @media (min-width: $tablet) {
       float: right;
       margin: 0 0 .5em 1.5em;
-      padding: 1em 1.5em;
 
       p {
         font-size: $text--medium;
@@ -28,6 +23,10 @@
       @media (min-width: $tablet) {
         font-size: 18px;
         margin: 0;
+      }
+
+      + p {
+        margin-bottom: 0;
       }
     }
 
