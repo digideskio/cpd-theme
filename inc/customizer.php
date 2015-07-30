@@ -790,11 +790,21 @@ function cpd_enqueue_css() {
 
     // Alternative row colour - RGBA version of the main row background colour
     $color_row_alt_color_rgb              = twentyfifteen_hex2rgb( $colors['cpd_table_row_bg_color'] );
-    $colors['cpd_table_row_alt_bg_color'] = vsprintf( 'rgba( %1$s, %2$s, %3$s, 0.85)', $color_row_alt_color_rgb );
+    
+    if( !empty( $color_row_alt_color_rgb  ) ) {
+        $colors['cpd_table_row_alt_bg_color'] = vsprintf( 'rgba( %1$s, %2$s, %3$s, 0.85)', $color_row_alt_color_rgb );
+    } else {
+        $colors['cpd_table_row_alt_bg_color'] = $colors['cpd_table_row_bg_color'];
+    }
 
     // Child link background colour - RGBA version of the main row background colour
     $color_child_link_bg_color_rgb            = twentyfifteen_hex2rgb( $colors['cpd_widget_link_bg_color'] );
-    $colors['cpd_widget_child_link_bg_color'] = vsprintf( 'rgba( %1$s, %2$s, %3$s, 0.6)', $color_child_link_bg_color_rgb );
+    
+    if( !empty( $color_child_link_bg_color_rgb ) ) {
+        $colors['cpd_widget_child_link_bg_color'] = vsprintf( 'rgba( %1$s, %2$s, %3$s, 0.6)', $color_child_link_bg_color_rgb );
+    } else {
+        $colors['cpd_widget_child_link_bg_color'] = $colors['cpd_widget_link_bg_color'];
+    }
 
     // Get our font stacks and Google Fonts URL
     $font_data = cpd_get_fonts();
