@@ -33,9 +33,9 @@
                 ?>
                 <div class="right">
                     <?php if ($url) { ?>
-                        <a href="<?php echo $url; ?>" target="_title"><img src='<?php echo esc_url($credit); ?>'></a>
+                        <a href="<?php echo $url; ?>" target="_blank"><img src='<?php echo esc_url($credit); ?>' alt='TDM'></a>
                     <?php } else { ?>
-                        <img src='<?php echo esc_url($credit); ?>'>
+                        <img src='<?php echo esc_url($credit); ?>' alt='TDM'>
                     <?php } ?>
                 </div>
                 <?php
